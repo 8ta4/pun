@@ -45,3 +45,13 @@ Yep! The tool tries to give you multiple puns for your content. This is super he
 > What's the target response time for `pun`?
 
 The target response time is one second flat. "[1.0 second is about the limit for the user's flow of thought to stay uninterrupted](https://www.nngroup.com/articles/response-times-3-important-limits/#:~:text=1.0%20second%20is%20about%20the%20limit%20for%20the%20user's%20flow%20of%20thought%20to%20stay%20uninterrupted)".
+
+## Substitution
+
+> Can `pun` use homophones for substitution?
+
+Yep! `pun` can totally use homophones for substitution. But it's not limited to perfect homophones. The tool works with words that share significant phonetic similarity too, which gives it way more flexibility when cranking out puns.
+
+> What metric is used to calculate phonetic similarity?
+
+`pun` uses Levenshtein distance on International Phonetic Alphabet (IPA) representations. For substitution jokes to land, the audience has to recognize the original phrase being referenced. The tool converts words to their IPA representation and then calculates the Levenshtein distance between them to figure out how phonetically similar they are. This approach makes sure substitutions keep enough phonetic similarity to keep the puns identifiable.
