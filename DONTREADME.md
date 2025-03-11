@@ -10,15 +10,11 @@ Yep. This keeps the tool from creating puns with weird obscure words terms that 
 
 > Does the vocabulary rely on a dictionary?
 
-Yes. `pun` draws its vocabulary from English Wiktionary entries that are categorized as English lemmas.
-
-> Can `pun` produce puns that don't use lemma forms?
-
-Yes. Even though the source data is just English lemmas, the tool can inflect these words to create puns.
+Yes. `pun` draws its vocabulary from English Wiktionary entries.
 
 > Does the vocabulary rely on Wikipedia?
 
-Nope. Wikipedia terms minus English Wiktionary English lemmas would mostly just end up with specialized named entities.
+Nope. Wikipedia terms minus English Wiktionary English terms would mostly just end up with specialized named entities.
 
 > Does `pun` filter vocabulary by word frequency?
 
