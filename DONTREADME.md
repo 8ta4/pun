@@ -73,3 +73,19 @@ Yep! `pun` can totally use homophones for substitution. But it's not limited to 
 > What metric is used to calculate phonetic similarity?
 
 `pun` uses Levenshtein distance on International Phonetic Alphabet (IPA) representations. For substitution jokes to land, the audience has to recognize the original phrase being referenced. The tool converts words to their IPA representation and then calculates the Levenshtein distance between them to figure out how phonetically similar they are. This approach makes sure substitutions keep enough phonetic similarity to keep the puns identifiable.
+
+> Can `pun` generate ungrammatical puns?
+
+Yep. That's because:
+
+- Plenty of good puns break grammar rules on purpose.
+
+- You can tweak the grammar yourself after getting the core wordplay idea, often needing to change more than just the substituted word to make it flow.
+
+> Can `pun` generate multiple puns that differ only in the grammatical form of the substituted word?
+
+Yep! These aren't filtered out because:
+
+- Different forms might land better depending on where you're using the pun.
+
+- Forcing you to mentally transform words wastes your brain power.
