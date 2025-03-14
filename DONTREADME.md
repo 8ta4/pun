@@ -82,7 +82,7 @@ Yep! `pun` can totally use homophones for substitution. But it's not limited to 
 
 Nope. Using dictionaries alone runs into these problems:
 
-- Dictionaries miss a bunch of words that everyone knows but aren't super common, like "ungoogleable".
+- Dictionaries might miss words that are well-known but not super common, like "ungoogleable".
 
 - Dictionary lookups struggle with how words change pronunciation in context, like how "the" sounds different before vowels versus consonants.
 
