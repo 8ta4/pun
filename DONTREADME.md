@@ -76,7 +76,7 @@ Yep! `pun` can totally use homophones for substitution. But it's not limited to 
 
 > What library does `pun` use for converting English text to IPA?
 
-`pun` uses Epitran. I tried eng_to_ipa, eSpeak, eSpeak-NG, and g2p too, but they weren't accurate enough.
+`pun` uses [`epitran`](https://github.com/dmort27/epitran). I tried [`eng_to_ipa`](https://github.com/mphilli/English-to-IPA), [`espeak-ng`](https://github.com/espeak-ng/espeak-ng), and [`g2p`](https://github.com/roedoejet/g2p) too, but they weren't accurate enough.
 
 > Does `pun` use dictionaries for converting English text to IPA?
 
