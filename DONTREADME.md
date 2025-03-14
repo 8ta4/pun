@@ -18,7 +18,7 @@ Nope. Wikipedia terms minus English Wiktionary English terms would mostly just e
 
 > Does `pun` filter vocabulary by word frequency?
 
-Nah. Word frequency alone doesn't determine how identifiable a term is. For example, "ungoogleable" barely registers on frequency lists, but everyone knows what it means because it's derived from "Google."
+Nah. Word frequency alone doesn't determine how identifiable a term is. For example, "ungoogleable" barely registers on frequency lists, but everyone knows what it means because it's derived from "Google".
 
 Plus, frequency filtering gets messy with phrases, which can show up in all sorts of variations and are a pain to count.
 
@@ -32,11 +32,11 @@ Nah. Remote LLMs give state-of-the-art results.
 
 No. The scores are precomputed because:
 
-- API calls to remote LLMs cost actual cash
+- API calls to remote LLMs cost actual cash.
 
-- Running scoring takes time
+- Running scoring takes time.
 
-- Random API failures would break your pun flow
+- Random API failures would break your pun flow.
 
 > Are the precomputed scores committed to this repository?
 
