@@ -74,6 +74,20 @@ Yep! `pun` can totally use homophones for substitution. But it's not limited to 
 
 `pun` uses Levenshtein distance on International Phonetic Alphabet (IPA) representations. For substitution jokes to land, the audience has to recognize the original phrase being referenced. The tool converts words to their IPA representation and then calculates the Levenshtein distance between them to figure out how phonetically similar they are. This approach makes sure substitutions keep enough phonetic similarity to keep the puns identifiable.
 
+> What library does `pun` use for converting English text to IPA?
+
+`pun` uses Epitran. I tried eng_to_ipa, eSpeak, eSpeak-NG, and g2p too, but they weren't accurate enough.
+
+> Does `pun` use dictionaries for converting English text to IPA?
+
+Nope. Using dictionaries alone runs into these problems:
+
+- Dictionaries miss a bunch of words that everyone knows but aren't super common, like "ungoogleable".
+
+- Dictionary lookups struggle with how words change pronunciation in context, like how "the" sounds different before vowels versus consonants.
+
+Sure, I could try to bolt dictionaries onto a conversion library for better accuracy, but that's a job for the IPA conversion library itself, not `pun`.
+
 > Are the results sorted by Levenshtein distance?
 
 Nope! Here's why:
