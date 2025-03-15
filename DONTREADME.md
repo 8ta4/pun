@@ -96,8 +96,6 @@ Nope! Here's why:
 
 - Creating a weighting between different factors would be arbitrary
 
-- Showing puns as they're generated means you see results immediately
-
 > Can `pun` generate ungrammatical puns?
 
 Yep. That's because:
