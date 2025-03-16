@@ -38,11 +38,11 @@ No. The scores are precomputed because:
 
 - Random API failures would break your pun flow.
 
-> Are the precomputed scores committed to this repository?
+> Are the precomputed recognizability scores committed to this repository?
 
 Nah. These scores are generated data, not source code.
 
-> Are the precomputed scores included in automated releases?
+> Are the precomputed recognizability scores included in automated releases?
 
 No way. The scoring process occasionally needs manual babysitting. API calls might fail, models might return garbage, or other random stuff can go wrong. Since it costs real money to run these LLM calls, I don't want to blindly retry in an automated pipeline. It's the kind of process I want to run manually, check the results, and then commit when I'm satisfied.
 
