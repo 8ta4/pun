@@ -62,7 +62,13 @@ Yep! The tool tries to give you multiple puns for your content. This is super he
 
 > What's the target response time for `pun`?
 
-The target response time is one second flat. "[1.0 second is about the limit for the user's flow of thought to stay uninterrupted](https://www.nngroup.com/articles/response-times-3-important-limits/#:~:text=1.0%20second%20is%20about%20the%20limit%20for%20the%20user's%20flow%20of%20thought%20to%20stay%20uninterrupted)".
+The target response time is ten seconds maximum. "[1.0 second is about the limit for the user's flow of thought to stay uninterrupted](https://www.nngroup.com/articles/response-times-3-important-limits/#:~:text=1.0%20second%20is%20about%20the%20limit%20for%20the%20user's%20flow%20of%20thought%20to%20stay%20uninterrupted)."
+
+When you fire up the `pun` command, it kickstarts a background server, so you won't have to wait as long next time.
+
+> What's the target response time while the background server is running?
+
+The target response time is one second when the background server is alive. "[10 seconds is about the limit for keeping the user's attention focused on the dialogue.](https://www.nngroup.com/articles/response-times-3-important-limits/#:~:text=10%20seconds%20is%20about%20the%20limit%20for%20keeping%20the%20user%27s%20attention%20focused%20on%20the%20dialogue.)"
 
 ## Substitution
 
