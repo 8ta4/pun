@@ -38,6 +38,18 @@ No. The scores are precomputed because:
 
 - Random API failures would break your pun flow.
 
+> Does `pun` use CSV for storing recognizability scores?
+
+Nope. CSV is not ideal here because it lacks a proper key-value structure, which could lead to duplicate phrase entries.
+
+> Does `pun` use JSON for storing recognizability scores?
+
+Nah. `pun` uses EDN instead of JSON because:
+
+- It's natively supported in Clojure, the backend language
+
+- It's a bit more concise than JSON since it doesn't require commas between entries
+
 > Are the precomputed recognizability scores committed to this repository?
 
 Nah. These scores are generated data, not source code.
