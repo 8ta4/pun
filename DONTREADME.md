@@ -56,7 +56,7 @@ Plus, frequency filtering gets messy with phrases, which can show up in all sort
 
 Instead, `pun` uses large language models to score how recognizable each word is, then filters based on those scores.
 
-> Can the score be negative?
+> Can the recognizability score be negative?
 
 No, because it's a percentage.
 
@@ -68,7 +68,7 @@ Specifically, it's the percentage of Americans 10 years or older who know the mo
 
 - "Most frequently used meaning" focuses on the idiomatic meaning of the phrase, because puns typically play off these established meanings.
 
-> Is the score an integer?
+> Is the recognizability score an integer?
 
 Nah, it's a double. Doubles allow finer ordering.
 
