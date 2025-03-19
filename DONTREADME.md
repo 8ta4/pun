@@ -56,6 +56,22 @@ Plus, frequency filtering gets messy with phrases, which can show up in all sort
 
 Instead, `pun` uses large language models to score how recognizable each word is, then filters based on those scores.
 
+> Can the score be negative?
+
+No, because it's a percentage.
+
+Specifically, it's the percentage of Americans 10 years or older who know the most frequently used meaning of each phrase.
+
+- "Americans" pins it to a clear population, avoiding wishy-washy concepts like "native speakers" that are open to interpretation.
+
+- "10 years or older" filters out babies, making it easier to sanity-check the model output, as super common words should hit near 100%.
+
+- "Most frequently used meaning" focuses on the idiomatic meaning of the phrase, because puns typically play off these established meanings.
+
+> Is the score an integer?
+
+Nah, it's a double. Doubles allow finer ordering.
+
 > Does `pun` use local LLMs for recognizability scoring?
 
 Nah. Remote LLMs give state-of-the-art results.
