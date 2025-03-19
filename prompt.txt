@@ -1,10 +1,10 @@
 ## Instructions
-Estimate the percentage of Americans 10 years or older who know the most frequently used meaning of each phrase listed below in English. Show your answer in a JSON object where each key is a phrase (string) and each value is a percentage (integer from 0 to 100 inclusive).
+Estimate the percentage of Americans 10 years or older who know the most frequently used meaning of each phrase listed below in English. Show your answer in a JSON object where each key is a phrase (a string) and each value is a percentage (a double from 0.0 to 100.0 inclusive).
 
 ## Sample Answer
 {
-  "the": 100,
-  "and": 100
+  "the": 100.0,
+  "and": 100.0
 }
 
 ## Phrases to Estimate
