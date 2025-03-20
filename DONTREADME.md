@@ -127,8 +127,8 @@ It's piecewise:
 $$
 \bar{X} =
 \begin{cases}
-    100 - \frac{(100 - X)(100 - \bar{B})}{100 - B} & \text{if } X > B \\
-    \frac{X \cdot \bar{B}}{B} & \text{if } X \leq B
+\frac{X \cdot \bar{B}}{B} & \text{if } X \leq B \\
+100 - \frac{(100 - X)(100 - \bar{B})}{100 - B} & \text{if } X > B
 \end{cases}
 $$
 
