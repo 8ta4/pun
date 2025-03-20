@@ -78,7 +78,7 @@ Nah. Remote LLMs give state-of-the-art results.
 
 > What model does `pun` use for recognizability scoring?
 
-Gemini 2.0 Flash is currently used, and here's why:
+[Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/flash) is currently used, and here's why:
 
 - It seems to pretty accurate estimates.
 
