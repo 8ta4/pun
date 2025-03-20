@@ -200,7 +200,7 @@ Nah. If `pun` only used phrases from the input, it'd be super limited, especiall
 
 Nope, those embeddings are precomputed. Calculating them every time would be way too slow.
 
-## Substitution
+## Phonetic Similarity Analysis
 
 > Can `pun` use homophones for substitution?
 
@@ -223,6 +223,8 @@ Nope. Using dictionaries alone runs into these problems:
 - Dictionary lookups struggle with how words change pronunciation in context, like how "the" sounds different before vowels versus consonants.
 
 Sure, I could try to bolt dictionaries onto a conversion library for better accuracy, but that's a job for the IPA conversion library itself, not `pun`.
+
+## Substitution
 
 > Are the results sorted by Levenshtein distance?
 
