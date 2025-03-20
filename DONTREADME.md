@@ -20,7 +20,7 @@ Instead of trying to directly measure the identifiability of the final puns, `pu
 
 > Does `pun` aim to generate more than one pun?
 
-Yep! The tool tries to give you multiple puns for your content. This is super helpful when you're jumping into comment threads. You'll have different puns ready for different replies without recycling the same one.
+Yep! The tool tries to give you multiple puns for your content. This is super helpful when you're jumping into comment threads. You'll have a whole barrel of puns ready for different replies without recycling the same one.
 
 ### Latency
 
