@@ -76,6 +76,16 @@ Nah, it's a double. Doubles allow finer ordering.
 
 Nah. Remote LLMs give state-of-the-art results.
 
+> What model does `pun` use for recognizability scoring?
+
+Gemini 2.0 Flash is currently used, and here's why:
+
+- It seems to pretty accurate estimates.
+
+- It's cheap.
+
+- Rate limits are high.
+
 > Does `pun` calculate recognizability scores on the fly?
 
 No. The scores are precomputed because:
@@ -85,6 +95,16 @@ No. The scores are precomputed because:
 - Running scoring takes time.
 
 - Random API failures would break your pun flow.
+
+> Does `pun` evaluate all phrases in one giant request?
+
+Nah. That ain't happening because:
+
+- Shoving all phrases in would blow past max output token lengths.
+
+- longer outputs tend to exhibit decreased quality
+
+So, the phrases are split into chunks and evaluated separately.
 
 > Does `pun` use CSV for storing recognizability scores?
 
@@ -106,6 +126,13 @@ Nah. These scores are generated data, not source code.
 
 No way. The scoring process occasionally needs manual babysitting. API calls might fail, models might return garbage, or other random stuff can go wrong. Since it costs real money to run these LLM calls, I don't want to blindly retry in an automated pipeline. It's the kind of process I want to run manually, check the results, and then commit when I'm satisfied.
 
+> Are the recognizability scores guaranteed to be reproducible?
+
+No way. Reproducibility is not guaranteed for the following reasons:
+
+- Even with temperature set to zero, many LLMs still aren't deterministic.
+
+- Remote model providers may update their models.
 
 ## Substitution
 
