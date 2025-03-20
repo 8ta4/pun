@@ -156,7 +156,7 @@ Two phrases are included: "the" and "to".
 
 Two phrases are plenty to show off a map structure. One lone phrase might get misread as a request for only one result.
 
-They are the two most frequent word forms in the English language, per the Corpus of Contemporary American English, which aligns with the target demographic of Americans 10 and up. These two words can confidently be assigned a recognizability score of 100.0%.
+[They are the two most frequent word forms](https://www.wordfrequency.info/samples/wordFrequency.xlsx), per the Corpus of Contemporary American English, which aligns with the target demographic of Americans 10 and up. These two words can confidently be assigned a recognizability score of 100.0%.
 
 > Does `pun` use CSV for storing recognizability scores?
 
