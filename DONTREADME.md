@@ -54,7 +54,7 @@ Nah. Word frequency alone doesn't determine how identifiable a term is. For exam
 
 Plus, frequency filtering gets messy with phrases, which can show up in all sorts of variations and are a pain to count.
 
-Instead, `pun` uses large language models to score how recognizable each word is, then filters based on those scores.
+Instead, `pun` uses large language models (LLMs) to score how recognizable each word is, then filters based on those scores.
 
 > Can the recognizability score be negative?
 
@@ -148,7 +148,7 @@ This piecewise approach ensures that scores of 0% and 100% remain unchanged, whi
 
 > Does the prompt include a sample answer?
 
-Yep! The prompt's got a sample answer to nudge the large language model into spitting out the format I'm after.
+Yep! The prompt's got a sample answer to nudge the LLM into spitting out the format I'm after.
 
 > How many phrases are included in the sample answer?
 
