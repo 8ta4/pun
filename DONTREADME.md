@@ -146,6 +146,18 @@ It is assumed that $B \neq 0$ and $B \neq 100$. If $B$ ever hits 0 or 100, that 
 
 This piecewise approach ensures that scores of 0% and 100% remain unchanged, while scores near the benchmark are adjusted proportionally to the benchmark word's difference from its mean.
 
+> Does the prompt include a sample answer?
+
+Yep! The prompt's got a sample answer to nudge the large language model into spitting out the format I'm after.
+
+> How many phrases are included in the sample answer?
+
+Two phrases are included: "the" and "to".
+
+Two phrases are plenty to show off a map structure. One lone phrase might get misread as a request for only one result.
+
+They are the two most frequent word forms in the English language, per the Corpus of Contemporary American English, which aligns with the target demographic of Americans 10 and up. These two words can confidently be assigned a recognizability score of 100.0%.
+
 > Does `pun` use CSV for storing recognizability scores?
 
 Nope. CSV is not ideal here because it lacks a proper key-value structure, which could lead to duplicate phrase entries.
