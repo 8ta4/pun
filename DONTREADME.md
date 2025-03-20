@@ -186,6 +186,20 @@ No way. Reproducibility is not guaranteed for the following reasons:
 
 - Remote model providers may update their models.
 
+## Relevant Phrase Identification
+
+> What metric does `pun` use to determine the relevance of phrases to the input text?
+
+`pun` uses cosine similarity. It gets one embedding for the whole input text, and embeddings for each vocabulary entry. If the cosine similarity between the input and a vocabulary entry is above a threshold, that entry is considered relevant.
+
+> Must relevant phrases be present in the input text?
+
+Nah. If `pun` only used phrases from the input, it'd be super limited, especially with short inputs.
+
+> Are the embeddings of vocabulary entries calculated on the fly?
+
+Nope, those embeddings are precomputed. Calculating them every time would be way too slow.
+
 ## Substitution
 
 > Can `pun` use homophones for substitution?
