@@ -106,6 +106,46 @@ Nah. That ain't happening because:
 
 So, the phrases are split into chunks and evaluated separately.
 
+> Are the recognizability scores normalized across multiple runs?
+
+Yes. Normalization makes the scores more consistent between different batches.
+
+A single benchmark word is sufficient. The primary goal is to accurately assess recognizability around the threshold suitable for pun generation.
+
+> What's the benchmark word?
+
+The benchmark word is "touchstone". This word was chosen because it has the following characteristics:
+
+- It is neither super common nor super obscure.
+
+- It means "benchmark".
+
+> What's the normalization formula?
+
+It's piecewise:
+
+$$
+\bar{X} =
+\begin{cases}
+    100 - \frac{(100 - X)(100 - \bar{B})}{100 - B} & \text{if } X > B \\
+    \frac{X \cdot \bar{B}}{B} & \text{if } X \leq B
+\end{cases}
+$$
+
+where:
+
+- $X$: The original score of a target word in the current run.
+
+- $\bar{X}$: The normalized score of the target word.
+
+- $B$: The score of the benchmark word in the current run.
+
+- $\bar{B}$: The mean score of the benchmark word across all runs.
+
+It is assumed that $B \neq 0$ and $B \neq 100$. If $B$ ever hits 0 or 100, that run gets tossed and re-done.
+
+This piecewise approach ensures that scores of 0% and 100% remain unchanged, while scores near the benchmark are adjusted proportionally to the benchmark word's difference from its mean.
+
 > Does `pun` use CSV for storing recognizability scores?
 
 Nope. CSV is not ideal here because it lacks a proper key-value structure, which could lead to duplicate phrase entries.
