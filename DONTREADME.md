@@ -62,7 +62,7 @@ No, because it's a percentage.
 
 Specifically, it's the percentage of Americans 10 years or older who know the most frequently used meaning of each phrase.
 
-- "Americans" pins it to a clear population, avoiding wishy-washy concepts like "native speakers" that are open to interpretation.
+- "Americans" pins it to a clear population, avoiding wishy-washy concepts like "native speakers" that are open to interpretation. Plus, for doing all that phonetic substitution stuff later, phonetic resources are easier to find for American English compared to, say, British English.
 
 - "10 years or older" filters out babies, making it easier to sanity-check the model output, as super common words should hit near 100%.
 
