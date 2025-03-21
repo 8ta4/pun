@@ -196,6 +196,16 @@ No way. Reproducibility is not guaranteed for the following reasons:
 
 Nah. If `pun` only used phrases from the input, it'd be super limited, especially with short inputs.
 
+> Does `pun` pick the embedding model that scores the highest on Semantic Textual Similarity (STS) tasks within the [Massive Text Embedding Benchmark](https://github.com/embeddings-benchmark/mteb) (MTEB)?
+
+Nope. It doesn't just grab the top STS model from MTEB for a few reasons:
+
+- Locality: Local models are preferred for performance and to avoid reliance on remote services.
+
+- Security: `pun` skips models requiring remote code execution due to potential security vulnerabilities.
+
+- Asymmetry: The relevant phrase identification task is asymmetric, comparing an embedding of the entire input text to embeddings of individual vocabulary entries, while STS tasks are typically symmetric, comparing sentences to sentences.
+
 > Are the embeddings of vocabulary entries calculated on the fly?
 
 Nope, those embeddings are precomputed. Calculating them every time would be way too slow.
