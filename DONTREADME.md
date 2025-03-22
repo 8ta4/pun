@@ -4,9 +4,9 @@
 
 ### Identifiability
 
-> Does `pun` use human surveys to evaluate identifiability?
+> Does `pun` use human feedback to evaluate identifiability?
 
-No. Human surveys would be ideal for measuring how recognizable puns are, but that's way too time-consuming.
+No. Human surveys feedback be ideal for measuring how recognizable puns are, but that's way too time-consuming.
 
 Instead of trying to directly measure the identifiability of the final puns, `pun` enforces process controls that make identifiable puns more likely.
 
