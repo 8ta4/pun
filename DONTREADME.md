@@ -88,7 +88,7 @@ Nah. Remote LLMs give state-of-the-art results.
 
 [Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/flash) is currently used, and here's why:
 
-- It seems to pretty accurate estimates.
+- It delivers pretty accurate estimates.
 
 - It's cheap.
 
