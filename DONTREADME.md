@@ -86,7 +86,7 @@ Nah. Remote LLMs give state-of-the-art results.
 
 > What model does `pun` use for recognizability scoring?
 
-`pun` goes with Claude 3.7 Sonnet. It's got some slick advantages:
+`pun` goes with [Claude 3.7 Sonnet](https://www.anthropic.com/news/claude-3-7-sonnet). It's got some slick advantages:
 
 - The recognizability scores aren't super sensitive to where the phrases are in the prompt.
 
