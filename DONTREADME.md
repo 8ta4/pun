@@ -86,13 +86,15 @@ Nah. Remote LLMs give state-of-the-art results.
 
 > What model does `pun` use for recognizability scoring?
 
-[Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/flash) is currently used, and here's why:
+`pun` goes with Claude 3.7 Sonnet. It's got some slick advantages:
 
-- It delivers pretty accurate estimates.
+- The recognizability scores aren't super sensitive to where the phrases are in the prompt.
 
-- It's cheap.
+- This model actually gives slightly lower scores to named entities and jargon compared to everyday language, which is pretty spot-on.
 
-- Rate limits are high.
+- The scores from this model just feel right.
+
+Sure, Claude 3.7 Sonnet might cost more and hit rate limits faster than some alternatives. Even so, the upsides crush those downsides.
 
 > Does pun use a system instruction in the recognizability prompt?
 
