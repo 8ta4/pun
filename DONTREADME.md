@@ -94,6 +94,10 @@ Nah. Remote LLMs give state-of-the-art results.
 
 - Rate limits are high.
 
+> Does pun use a system instruction in the recognizability prompt?
+
+Yep. If the list of phrases happens to have words that sound like commands, the LLM might think those words are instructions, instead of just phrases to score. So, system instructions are there to make it crystal clear what's data and what's instruction.
+
 > What temperature value does `pun` use for recognizability scoring?
 
 `pun` rocks a temperature of 0 for recognizability scoring. The whole point is to get the model to consistently tap into its knowledge and spit out its best estimate, not get all random.
