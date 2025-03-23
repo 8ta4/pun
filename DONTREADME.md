@@ -94,6 +94,10 @@ Nah. Remote LLMs give state-of-the-art results.
 
 - Rate limits are high.
 
+> What temperature value does `pun` use for recognizability scoring?
+
+`pun` rocks a temperature of 0 for recognizability scoring. The whole point is to get the model to consistently tap into its knowledge and spit out its best estimate, not get all random.
+
 > Does `pun` calculate recognizability scores on the fly?
 
 No. The scores are precomputed because:
