@@ -96,9 +96,9 @@ Nah. Remote LLMs give state-of-the-art results.
 
 Sure, Claude 3.7 Sonnet might cost more and hit rate limits faster than some alternatives. Even so, the upsides crush those downsides.
 
-> Does pun use a system instruction in the recognizability prompt?
+> Does `pun` use a system prompt?
 
-Yep. If the list of phrases happens to have words that sound like commands, the LLM might think those words are instructions, instead of just phrases to score. So, system instructions are there to make it crystal clear what's data and what's instruction.
+Yep. If the list of phrases happens to have words that sound like commands, the LLM might think those words are instructions, instead of just phrases to score. So, the system prompt is there to make it crystal clear what's data and what's instruction.
 
 > What temperature value does `pun` use for recognizability scoring?
 
