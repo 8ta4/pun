@@ -90,7 +90,7 @@ Nah. Remote LLMs give state-of-the-art results.
 
 - The recognizability scores aren't super sensitive to where the phrases are in the prompt.
 
-- This model actually gives slightly lower scores to named entities and jargon compared to everyday language, which is pretty spot-on.
+- This model gives lower scores to named entities and jargon compared to everyday language.
 
 - The scores from this model just feel right.
 
