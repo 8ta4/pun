@@ -138,6 +138,14 @@ The benchmark word is "touchstone". This word was chosen because it has the foll
 
 - It means "benchmark".
 
+> Where's the benchmark word sitting in that list of phrases up for scoring?
+
+The benchmark word's chilling at the tail end of the phrase list getting scored.
+
+Sticking it at the end might give a slightly context-savvy benchmark score.
+
+So, when the LLM rolls through the phrases one by one, having the benchmark word last means it gets judged after the model's already chewed through the rest of the list. That earlier scoring might quietly set up this internal vibe for recognizability. By hitting the benchmark word at the finish line, the LLM's take on how recognizable it is could lean on that built-up context, maybe landing a sharper benchmark score than if it just tackled it cold right out of the gate.
+
 > What's the normalization formula?
 
 It's piecewise:
