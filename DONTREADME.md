@@ -172,9 +172,9 @@ It is assumed that $B \neq 0$ and $B \neq 100$. If $B$ ever hits 0 or 100, that 
 
 This piecewise approach ensures that scores of 0% and 100% remain unchanged, while scores near the benchmark are adjusted proportionally to the benchmark word's difference from its mean.
 
-> Does the prompt include a sample answer?
+> Does the system prompt include a sample answer?
 
-Yep! The prompt's got a sample answer to nudge the LLM into spitting out the format I'm after.
+Yep! The system prompt's got a sample answer to nudge the LLM into spitting out the format I'm after.
 
 > How many phrases are included in the sample answer?
 
