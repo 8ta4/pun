@@ -184,7 +184,7 @@ This piecewise approach ensures that scores of 0% and 100% remain unchanged, whi
 
 Yeah, on top of the benchmark word, there's one extra phrase in the phrase list that's deliberately locked in: the dummy word.
 
-when messing around with the Claude 3.7 Sonnet model, I noticed that if the phrase list kicks off with a bunch of high-recognizability phrases in a row, that streak can artificially bump up the recognizability score for the first phrase that breaks the pattern.
+When messing around with the Claude 3.7 Sonnet model, I noticed that if the phrase list kicks off with a bunch of high-recognizability phrases in a row, that streak can artificially bump up the recognizability score for the first phrase that breaks the pattern.
 
 > What's the dummy word?
 
