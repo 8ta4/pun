@@ -102,7 +102,7 @@ Yep. If the list of phrases happens to have words that sound like commands, the 
 
 > Is the user prompt just a plain list of phrases?
 
-No, the user prompt isn't just a plain list of phrases. It's got this label, `Phrases:` slapped on a line right before the list kicks off."
+No, the user prompt isn't just a plain list of phrases. It's got this label, `Phrases:` slapped on a line right before the list kicks off.
 
 Based on testing, it looks like if the user prompt is just a plain list of phrases, no label upfront, the LLM might not even bother to process and score all the phrases in the list.
 
