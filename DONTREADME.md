@@ -180,6 +180,28 @@ It is assumed that $B \neq 0$ and $B \neq 100$. If $B$ ever hits 0 or 100, that 
 
 This piecewise approach ensures that scores of 0% and 100% remain unchanged, while scores near the benchmark are adjusted proportionally to the benchmark word's difference from its mean.
 
+> Besides the benchmark word, is there another phrase in the phrase list that stays the same?
+
+Yeah, on top of the benchmark word, there's one extra phrase in the phrase list that's deliberately locked in: the dummy word.
+
+when messing around with the Claude 3.7 Sonnet model, I noticed that if the phrase list kicks off with a bunch of high-recognizability phrases in a row, that streak can artificially bump up the recognizability score for the first phrase that breaks the pattern.
+
+> What's the dummy word?
+
+The dummy word is "floccinaucinihilipilification". It's picked for a few good reasons:
+
+- It stops a high-recognizability streak from forming at the beginning.
+
+- With its length and obscurity, "floccinaucinihilipilification" is pretty much never gonna be useful for whipping up puns.
+
+- The meaning fits nicely for a word acting as a placeholder in calibration.
+
+> Does `pun` prefill the Assistant's response for recognizability scoring?
+
+Yep, pun pre-fills the Assistant's response with `{`. That prefill is a slick trick to boost the odds of getting legit EDN output.
+
+Adding more than just `{` in the prefill tends to mess things up, inflating the score for the phrase right after the dummy word.
+
 > Does the system prompt include a sample answer?
 
 Yep! The system prompt's got a sample answer to nudge the LLM into spitting out the format I'm after.
