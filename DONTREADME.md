@@ -98,15 +98,15 @@ Sure, Claude 3.7 Sonnet might cost more and hit rate limits faster than some alt
 
 > Does `pun` use a system prompt?
 
-Yep. If the list of phrases happens to have words that sound like commands, the LLM might think those words are instructions, instead of just phrases to score. So, the system prompt is there to make it crystal clear what's data and what's instruction.
+Yep. If the list of phrases happens to have words that sound like commands, Claude 3.7 Sonnet might think those words are instructions, instead of just phrases to score. So, the system prompt is there to make it crystal clear what's data and what's instruction.
 
 > Is the user prompt just a plain list of phrases?
 
 No, the user prompt isn't just a plain list of phrases. It's got this label, `Phrases:` slapped on a line right before the list kicks off.
 
-Based on testing, it looks like if the user prompt is just a plain list of phrases, no label upfront, the LLM might not even bother to process and score all the phrases in the list.
+Based on testing, it looks like if the user prompt is just a plain list of phrases, no label upfront, Claude 3.7 Sonnet might not even bother to process and score all the phrases in the list.
 
-This label tells the LLM that the stuff coming next is a phrase list for recognizability scoring.
+This label tells Claude 3.7 Sonnet that the stuff coming next is a phrase list for recognizability scoring.
 
 > What temperature value does `pun` use for recognizability scoring?
 
