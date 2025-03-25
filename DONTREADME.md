@@ -96,7 +96,7 @@ Nah. Remote LLMs give state-of-the-art results.
 
 Sure, Claude 3.7 Sonnet might cost more and hit rate limits faster than some alternatives. Even so, the upsides crush those downsides.
 
-> Does `pun` use a system prompt?
+> Does `pun` use [a system prompt](https://docs.anthropic.com/en/release-notes/system-prompts)?
 
 Yep. If the list of phrases happens to have words that sound like commands, Claude 3.7 Sonnet might think those words are instructions, instead of just phrases to score. So, the system prompt is there to make it crystal clear what's data and what's instruction.
 
@@ -196,7 +196,7 @@ The dummy word is "floccinaucinihilipilification". It's picked for a few good re
 
 - The meaning fits nicely for a word acting as a placeholder in calibration.
 
-> Does `pun` prefill the Assistant's response for recognizability scoring?
+> Does `pun` [prefill](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prefill-claudes-response) the Assistant's response for recognizability scoring?
 
 Yep, pun pre-fills the Assistant's response with `{`. That prefill is a slick trick to boost the odds of getting legit EDN output.
 
