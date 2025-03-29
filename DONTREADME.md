@@ -202,6 +202,20 @@ Yep, pun pre-fills the Assistant's response with `{`. That prefill is a slick tr
 
 Adding more than just `{` in the prefill tends to mess things up, inflating the score for the phrase right after the dummy word.
 
+> Does pun use Claude's extended thinking feature for recognizability scoring?
+
+Nah. Extended thinking kinda messes with things:
+
+- One neat thing about Claude 3.7 Sonnet normally is that it gives lower scores to named entities and jargon compared to everyday words. Extended thinking seems to counteract that useful bias.
+
+- You're stuck with a temperature of 1.0 when using extended thinking.
+
+- Extended thinking is incompatible with prefilling the assistant's response. Trying to work around the prefill issue with a separate formatting step just adds more complexity and cost.
+
+- It chews through more tokens because it has to generate all that thinking text first, bumping up the API costs.
+
+- It also takes a bit longer to get a response since the model has to do the extra thinking step before giving the final scores.
+
 > Does the system prompt include a sample answer?
 
 Yep! The system prompt's got a sample answer to nudge the LLM into spitting out the format I'm after.
