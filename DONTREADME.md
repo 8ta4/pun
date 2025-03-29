@@ -332,6 +332,14 @@ Yep. That's because:
 
 - You can tweak the grammar yourself after getting the core wordplay idea, often needing to change more than just the substituted word to make it flow.
 
+> Does `pun` filter substitutions where one word is identical to the other except for an "-ly" suffix at the end?
+
+Yes. If one word is just the other plus "-ly" or vice-versa, that usually means swapping between an adjective and its adverb form, or the other way around. Thing is, that kind of substitution rarely works as clever wordplay and often just breaks the grammar. So, to knock out these predictable duds easily, `pun` runs a simple string check for that "-ly" pattern and filters the substitution if it matches.
+
+> Does `pun` filter out substitutions where the replacement word is just an inflectional variant of the original word being replaced?
+
+Yep. Swapping a word for another form sharing the exact same dictionary lemma almost never makes for a clever pun. So, `pun` checks if the potential replacement shares a lemma with the original word. If they match, that substitution gets filtered out.
+
 > Can `pun` generate multiple puns that differ only in the grammatical form of the substituted word?
 
 Yep! These aren't filtered out because:
