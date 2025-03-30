@@ -134,7 +134,7 @@ So, the phrases are split into chunks and evaluated separately.
 
 > Are the recognizability scores normalized across multiple runs?
 
-Yes. Normalization makes the scores more consistent between different batches.
+Yes. Normalization makes the scores more consistent between different runs.
 
 A single benchmark word is sufficient. The primary goal is to accurately assess recognizability around the threshold suitable for pun generation.
 
