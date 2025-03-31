@@ -184,8 +184,10 @@ This piecewise approach ensures that scores of 0% and 100% remain unchanged, whi
 
 > Does `pun` [prefill](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prefill-claudes-response) the Assistant's response for recognizability scoring?
 
-```{
-"phrase"```
+```
+{
+"phrase"
+```
 
 This trick forces Claude to use that exact phrase string as the key in the output map, stopping it from messing with the key text. Plus, it cuts the cost slightly by turning what would've been pricey output tokens into cheaper input tokens.
 
