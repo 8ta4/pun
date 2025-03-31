@@ -88,13 +88,13 @@ Nah. Remote LLMs give state-of-the-art results.
 
 `pun` goes with [Claude 3.7 Sonnet](https://www.anthropic.com/news/claude-3-7-sonnet). It's got some slick advantages:
 
-- The recognizability scores aren't super sensitive to where the phrases are in the prompt.
-
 - This model gives lower scores to named entities and jargon compared to everyday language.
 
 - The scores from this model just feel right.
 
-Sure, Claude 3.7 Sonnet might cost more and hit rate limits faster than some alternatives. Even so, the upsides crush those downsides.
+- Pinning a dated version helps dodge potential headaches from model updates during the scoring process.
+
+- Using the Message Batches API makes processing the massive volume of requests feasible.
 
 > Does `pun` use [a system prompt](https://docs.anthropic.com/en/release-notes/system-prompts)?
 
