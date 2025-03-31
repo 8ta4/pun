@@ -1,6 +1,8 @@
-Instructions: Estimate the percentage of Americans 10 years or older who know the most frequently used meaning of each phrase. Show your answer in an EDN map where each key is a phrase (a string) and each value is a percentage (a double from 0.0 to 100.0 inclusive).
+Instructions:
+Estimate the percentage of Americans 10 years or older who know the most frequently used meaning of each phrase. Show your answer in an EDN map where each key is a phrase (a string) and each value is a percentage (a double from 0.0 to 100.0 inclusive).
 
-Sample Answer: {
+Sample Answer:
+{
 "the" 100.0
 "to" 100.0
 }
