@@ -130,6 +130,10 @@ Nah. That ain't happening because:
 
 - Longer outputs tend to exhibit decreased quality
 
+> How many phrases get sent to the LLM in each scoring request?
+
+Each request contains exactly two phrases: the benchmark word along with one other phrase pulled from the Wiktionary source list.
+
 > Are the recognizability scores normalized across multiple runs?
 
 Yes. Normalization makes the scores more consistent between different runs.
@@ -180,7 +184,10 @@ This piecewise approach ensures that scores of 0% and 100% remain unchanged, whi
 
 > Does `pun` [prefill](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prefill-claudes-response) the Assistant's response for recognizability scoring?
 
-Yep, `pun` pre-fills the Assistant's response with `{`. That prefill is a slick trick to boost the odds of getting legit EDN output.
+```{
+"phrase"```
+
+This trick forces Claude to use that exact phrase string as the key in the output map, stopping it from messing with the key text. Plus, it cuts the cost slightly by turning what would've been pricey output tokens into cheaper input tokens.
 
 > Does `pun` use [Claude's extended thinking](https://www.anthropic.com/news/visible-extended-thinking) feature for recognizability scoring?
 
