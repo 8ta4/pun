@@ -128,7 +128,7 @@ Nah. That ain't happening because:
 
 - Shoving all phrases in would blow past max output token lengths.
 
-- longer outputs tend to exhibit decreased quality
+- Longer outputs tend to exhibit decreased quality
 
 So, the phrases are split into chunks and evaluated separately.
 
