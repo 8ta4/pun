@@ -193,7 +193,7 @@ This piecewise approach ensures that scores of 0% and 100% remain unchanged, whi
 
 This trick forces Claude to use that exact phrase string as the key in the output map, stopping it from messing with the key text. Plus, it cuts the cost slightly by turning what would've been pricey output tokens into cheaper input tokens.
 
-LLMs can sometimes be influenced by the order in which items are presented. The textbook move might be to evaluate both orders  and average the scores to cancel out that effect.
+LLMs can sometimes be influenced by the order in which items are presented. The textbook move might be to evaluate both orders and average the scores to cancel out that effect.
 
 But `pun` deliberately sticks to the single, fixed order for these reasons:
 
