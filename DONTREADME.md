@@ -231,6 +231,14 @@ Determining the true percentage for less common words is difficult.
 
 [They are the two most frequent word forms](https://www.wordfrequency.info/samples/wordFrequency.xlsx), per the Corpus of Contemporary American English, which aligns with the target demographic of Americans 10 and up. These two words can confidently be assigned a recognizability score of 100.0%.
 
+> Does `pun` score each phrase multiple times and average the results?
+
+No.
+
+Running the same phrase a couple of times and averaging the results could potentially help smooth out any random noise.
+
+But `pun` skips that. Doing multiple runs costs more API calls.
+
 > Does `pun` use CSV for storing recognizability scores?
 
 Nope. CSV is not ideal here because it lacks a proper key-value structure, which could lead to duplicate phrase entries.
