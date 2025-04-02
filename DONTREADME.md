@@ -128,9 +128,9 @@ No. The scores are precomputed because:
 
 Nah. That ain't happening because:
 
-- Shoving all phrases in would blow past max output token lengths.
+- Shoving all phrases in would blow past max output token lengths..
 
-- Longer outputs tend to exhibit decreased quality
+- Longer outputs tend to exhibit decreased quality.
 
 > How many phrases get sent to the LLM in each scoring request?
 
@@ -247,9 +247,9 @@ Nope. CSV is not ideal here because it lacks a proper key-value structure, which
 
 Nah. `pun` uses EDN instead of JSON because:
 
-- It's natively supported in Clojure, the backend language
+- It's natively supported in Clojure, the backend language.
 
-- It's a bit more concise than JSON since it doesn't require commas between entries
+- It's a bit more concise than JSON since it doesn't require commas between entries.
 
 > Are the precomputed recognizability scores committed to this repository?
 
@@ -345,9 +345,9 @@ Normalizing by the length of the word being replaced directly shows what percent
 
 Nope! Here's why:
 
-- Phonetic similarity is just one piece of what makes a pun work
+- Phonetic similarity is just one piece of what makes a pun work.
 
-- Creating a weighting between different factors would be arbitrary
+- Creating a weighting between different factors would be arbitrary.
 
 > Can `pun` generate ungrammatical puns?
 
