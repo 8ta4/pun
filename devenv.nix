@@ -5,7 +5,10 @@
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = [ pkgs.git ];
+  packages = [
+    pkgs.git
+    pkgs.gitleaks
+  ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
@@ -41,6 +44,11 @@
   # https://devenv.sh/git-hooks/
   # git-hooks.hooks.shellcheck.enable = true;
   git-hooks.hooks = {
+    gitleaks = {
+      enable = true;
+      # https://github.com/gitleaks/gitleaks/blob/39947b0b0d3f1829438000819c1ba9dbeb023a89/.pre-commit-hooks.yaml#L4
+      entry = "gitleaks protect --verbose --redact --staged";
+    };
     nixpkgs-fmt.enable = true;
     prettier.enable = true;
     # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870
