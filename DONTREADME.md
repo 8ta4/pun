@@ -96,6 +96,8 @@ Nah. Remote LLMs give state-of-the-art results.
 
 - Using the Message Batches API makes processing the massive volume of requests feasible.
 
+Sure, Claude 3.7 Sonnet might cost more than some alternatives. But you get what you pay for.
+
 > Does `pun` use [a system prompt](https://docs.anthropic.com/en/release-notes/system-prompts)?
 
 Yep. If the list of phrases happens to have words that sound like commands, Claude 3.7 Sonnet might think those words are instructions, instead of just phrases to score. So, the system prompt is there to make it crystal clear what's data and what's instruction.
@@ -191,6 +193,16 @@ This piecewise approach ensures that scores of 0% and 100% remain unchanged, whi
 
 This trick forces Claude to use that exact phrase string as the key in the output map, stopping it from messing with the key text. Plus, it cuts the cost slightly by turning what would've been pricey output tokens into cheaper input tokens.
 
+LLMs can sometimes be influenced by the order in which items are presented. The textbook move might be to evaluate both orders  and average the scores to cancel out that effect.
+
+But `pun` deliberately sticks to the single, fixed order for these reasons:
+
+- Swapping the order would mean prefilling with the benchmark word's string instead, losing the guarantee that the key for the other phrase is accurate.
+
+- The goal isn't perfect, absolute scores; it's getting relative scores to rank phrases against each other.
+
+- Running both orders means double the API calls.
+
 > Does `pun` use [Claude's extended thinking](https://www.anthropic.com/news/visible-extended-thinking) feature for recognizability scoring?
 
 Nah. Extended thinking kinda messes with things:
@@ -214,6 +226,8 @@ Yep! The system prompt's got a sample answer to nudge the LLM into spitting out 
 Two phrases are included: "the" and "to".
 
 Two phrases are plenty to show off a map structure. One lone phrase might get misread as a request for only one result.
+
+Determining the true percentage for less common words is difficult.
 
 [They are the two most frequent word forms](https://www.wordfrequency.info/samples/wordFrequency.xlsx), per the Corpus of Contemporary American English, which aligns with the target demographic of Americans 10 and up. These two words can confidently be assigned a recognizability score of 100.0%.
 
