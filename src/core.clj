@@ -1,7 +1,10 @@
 (ns core
   (:require
    [clojure.java.io :as io]
-   [cheshire.core :refer [parse-string]]))
+   [cheshire.core :refer [parse-string]])
+  (:import
+   (java.util.zip GZIPInputStream)
+   (java.io InputStreamReader BufferedReader)))
 
 (def wiktextract-data-path
   (str (System/getProperty "user.home") "/.cache/pun/raw-wiktextract-data.jsonl.gz"))
@@ -10,9 +13,9 @@
   []
   (->> wiktextract-data-path
        io/input-stream
-       java.util.zip.GZIPInputStream.
-       java.io.InputStreamReader.
-       java.io.BufferedReader.
+       GZIPInputStream.
+       InputStreamReader.
+       BufferedReader.
        line-seq
        (map #(parse-string % keyword))
        (filter (comp (partial = "English") :lang))))
