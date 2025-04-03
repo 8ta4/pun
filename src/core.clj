@@ -10,7 +10,7 @@
 (def wiktextract-data-path
   (str (System/getProperty "user.home") "/.cache/pun/raw-wiktextract-data.jsonl.gz"))
 
-(defn load
+(defn extract
   []
   (->> wiktextract-data-path
        io/input-stream
@@ -24,7 +24,7 @@
 
 (defn save
   []
-  (->> (load)
+  (->> (extract)
        distinct
        sort
        (string/join "\n")
