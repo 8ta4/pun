@@ -55,6 +55,7 @@
     nixpkgs-fmt.enable = true;
     prettier.enable = true;
     # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870
+    shellcheck.enable = true;
     trailing-whitespace = {
       enable = true;
       # https://github.com/pre-commit/pre-commit-hooks/blob/6db05e22aa7546f11ebde806dbf6fbf5985de07c/.pre-commit-hooks.yaml#L205-L212
