@@ -26,6 +26,13 @@ pom.xml.asc
 .nrepl-port
 .cpcache/
 
-### pun
-.clj-kondo/.cache
+### clj-kondo
+# https://github.com/clj-kondo/clj-kondo/blob/b48c405351da8baa9f57259194129e0dd46b77b1/.gitignore#L66C1-L66C21
+**/.clj-kondo/.cache
+
+### Language Server Protocol
 .lsp/.cache
+
+### Calva
+# https://github.com/BetterThanTomorrow/calva/blob/1f934b7317d39545390f113cf3c1fa8d68589d5b/.gitignore#L80
+output.calva-repl
