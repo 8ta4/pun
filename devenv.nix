@@ -8,6 +8,7 @@
   packages = [
     pkgs.git
     pkgs.gitleaks
+    pkgs.wget
   ];
 
   # https://devenv.sh/languages/
