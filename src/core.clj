@@ -1,15 +1,16 @@
 (ns core
   (:require
+   [cheshire.core :refer [parse-string]]
    [clojure.java.io :as io]
-   [cheshire.core :refer [parse-string]])
+   [clojure.string :as string])
   (:import
-   (java.util.zip GZIPInputStream)
-   (java.io InputStreamReader BufferedReader)))
+   (java.io BufferedReader InputStreamReader)
+   (java.util.zip GZIPInputStream)))
 
 (def wiktextract-data-path
   (str (System/getProperty "user.home") "/.cache/pun/raw-wiktextract-data.jsonl.gz"))
 
-(defn load-wiktextract-data
+(defn load
   []
   (->> wiktextract-data-path
        io/input-stream
@@ -20,6 +21,14 @@
        (map #(parse-string % keyword))
        (filter (comp (partial = "English") :lang))
        (map :word)))
+
+(defn save
+  []
+  (->> (load)
+       distinct
+       sort
+       (string/join "\n")
+       (spit "output.txt")))
 
 (defn -main
   "The main entry point for the application"
