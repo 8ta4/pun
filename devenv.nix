@@ -12,6 +12,7 @@
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
+  languages.clojure.enable = true;
 
   # https://devenv.sh/processes/
   # processes.cargo-watch.exec = "cargo-watch";
@@ -44,6 +45,7 @@
   # https://devenv.sh/git-hooks/
   # git-hooks.hooks.shellcheck.enable = true;
   git-hooks.hooks = {
+    cljfmt.enable = true;
     gitleaks = {
       enable = true;
       # https://github.com/gitleaks/gitleaks/blob/39947b0b0d3f1829438000819c1ba9dbeb023a89/.pre-commit-hooks.yaml#L4
