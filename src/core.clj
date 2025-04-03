@@ -28,7 +28,7 @@
        distinct
        sort
        (string/join "\n")
-       (spit "output.txt")))
+       (spit "vocabulary.txt")))
 
 (defn -main
   "The main entry point for the application"
