@@ -18,7 +18,8 @@
        BufferedReader.
        line-seq
        (map #(parse-string % keyword))
-       (filter (comp (partial = "English") :lang))))
+       (filter (comp (partial = "English") :lang))
+       (map :word)))
 
 (defn -main
   "The main entry point for the application"
