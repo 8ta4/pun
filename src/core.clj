@@ -1,15 +1,34 @@
 (ns core
-  (:require [clojure.java.shell :refer [sh]]))
+  (:require
+   [cheshire.core :refer [parse-string]]
+   [clojure.java.io :as io]
+   [clojure.string :as string])
+  (:import
+   (java.io BufferedReader InputStreamReader)
+   (java.util.zip GZIPInputStream)))
 
-(def cache-path
-  (str (System/getProperty "user.home") "/.cache/pun"))
+(def wiktextract-data-path
+  (str (System/getProperty "user.home") "/.cache/pun/raw-wiktextract-data.jsonl.gz"))
 
-(def url
-  "https://kaikki.org/dictionary/raw-wiktextract-data.jsonl.gz")
-
-(defn download
+(defn extract
   []
-  (sh "wget" "-Nc" "-P" cache-path url))
+  (->> wiktextract-data-path
+       io/input-stream
+       GZIPInputStream.
+       InputStreamReader.
+       BufferedReader.
+       line-seq
+       (map #(parse-string % keyword))
+       (filter (comp (partial = "English") :lang))
+       (map :word)))
+
+(defn save
+  []
+  (->> (extract)
+       distinct
+       sort
+       (string/join "\n")
+       (spit "vocabulary.txt")))
 
 (defn -main
   "The main entry point for the application"
