@@ -249,7 +249,7 @@ Nah. `pun` uses EDN instead of JSON because:
 
 - It's natively supported in Clojure, the backend language.
 
-- It's a bit more concise than JSON since it doesn't require commas between entries.
+- It's a bit more concise than JSON since it ditches the colons.
 
 > Are the precomputed recognizability scores committed to this repository?
 
