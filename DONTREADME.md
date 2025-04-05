@@ -259,6 +259,14 @@ Nah. These scores are generated data, not source code.
 
 No way. The scoring process occasionally needs manual babysitting. API calls might fail, models might return garbage, or other random stuff can go wrong. Since it costs real money to run these LLM calls, I don't want to blindly retry in an automated pipeline. It's the kind of process I want to run manually, check the results, and then commit when I'm satisfied.
 
+> Are the precomputed recognizability scores stored using Git LFS?
+
+No.
+
+- Git LFS adds that annoying central server dependency, which could be a single point of failure.
+
+- The processed score files just don't hit the size where LFS becomes necessary.
+
 > Are the recognizability scores guaranteed to be reproducible?
 
 No way. Reproducibility is not guaranteed for the following reasons:
