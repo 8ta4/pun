@@ -40,12 +40,12 @@
 (def config-path
   (str (System/getProperty "user.home") "/.config/pun/config.yaml"))
 
-(defn parse-config
-  "Parse the config.yaml file and return the configuration as a map"
+(defn get-anthropic-key
   []
   (-> config-path
       slurp
-      yaml/parse-string))
+      yaml/parse-string
+      :key))
 
 (defn -main
   "The main entry point for the application"
