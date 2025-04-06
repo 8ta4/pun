@@ -53,9 +53,9 @@
   [requests]
   (let [api-key (get-anthropic-key)
         url "https://api.anthropic.com/v1/messages/batches"
-        headers {"x-api-key" api-key
-                 "anthropic-version" "2023-06-01"
-                 "content-type" "application/json"}
+        headers {:x-api-key api-key
+                 :anthropic-version "2023-06-01"
+                 :content-type "application/json"}
         body {:requests requests}]
     (client/post url
                  {:headers headers
