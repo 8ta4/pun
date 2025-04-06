@@ -65,6 +65,16 @@
 (def system
   (slurp "system.txt"))
 
+(defn create-request
+  [phrase]
+  {:custom_id phrase
+   :params {:model "claude-3-7-sonnet-20250219"
+            :max_tokens 32
+            :temperature 0
+            :system system
+            :messages [{:role "user" :content (str "Phrases:\n" phrase "\ntouchstone")}
+                       {:role "assistant" :content (str "{\n\"" phrase "\"")}]}})
+
 (defn -main
   "The main entry point for the application"
   [& args]
