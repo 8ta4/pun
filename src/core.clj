@@ -48,13 +48,15 @@
       yaml/parse-string
       :key))
 
+(def anthropic-version "2023-06-01")
+
 (defn send-batch
   "Send a batch of Message creation requests"
   [requests]
   (let [api-key (get-anthropic-key)
         url "https://api.anthropic.com/v1/messages/batches"
         headers {:x-api-key api-key
-                 :anthropic-version "2023-06-01"
+                 :anthropic-version anthropic-version
                  :content-type "application/json"}
         body {:requests requests}]
     (client/post url
@@ -81,7 +83,7 @@
   (let [api-key (get-anthropic-key)
         url (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
         headers {:x-api-key api-key
-                 :anthropic-version "2023-06-01"}]
+                 :anthropic-version anthropic-version}]
     (client/get url
                 {:headers headers
                  :as :json})))
