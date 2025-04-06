@@ -1,6 +1,7 @@
 (ns core
   (:require
    [cheshire.core :refer [parse-string]]
+   [clj-http.client :as client]
    [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
    [clojure.string :as string])
@@ -46,6 +47,20 @@
       slurp
       yaml/parse-string
       :key))
+
+(defn batch-request
+  "Makes a batch request to the Anthropic API."
+  [requests]
+  (let [api-key (get-anthropic-key)
+        url "https://api.anthropic.com/v1/messages/batches"
+        headers {"x-api-key" api-key
+                 "anthropic-version" "2023-06-01"
+                 "content-type" "application/json"}
+        body {:requests requests}]
+    (client/post url
+                 {:headers headers
+                  :body (cheshire.core/generate-string body)
+                  :as :json})))
 
 (defn -main
   "The main entry point for the application"
