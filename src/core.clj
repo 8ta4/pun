@@ -48,8 +48,8 @@
       yaml/parse-string
       :key))
 
-(defn batch-request
-  "Makes a batch request to the Anthropic API."
+(defn send-batch
+  "Send a batch of Message creation requests"
   [requests]
   (let [api-key (get-anthropic-key)
         url "https://api.anthropic.com/v1/messages/batches"
