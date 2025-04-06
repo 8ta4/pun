@@ -42,6 +42,28 @@ When you fire up the `pun` command, it kickstarts a background server, so you wo
 
 The target response time is one second when the background server is alive. "[10 seconds is about the limit for keeping the user's attention focused on the dialogue.](https://www.nngroup.com/articles/response-times-3-important-limits/#:~:text=10%20seconds%20is%20about%20the%20limit%20for%20keeping%20the%20user%27s%20attention%20focused%20on%20the%20dialogue.)"
 
+## Storage
+
+> What is the storage location for the API key?
+
+The API key storage location is `~/.config/accent/config.yaml`.
+
+> Why choose YAML over JSON for storing the API keys?
+
+YAML is better than JSON because it
+
+- allows you to add comments.
+
+- doesn't require extra commas.
+
+> Why the `.yaml` and not `.yml`?
+
+The YAML FAQ recommends "[using '.yaml' when possible.](https://yaml.org/faq.html#:~:text=Is%20there%20an,yaml%22%20when%20possible.)"
+
+> Why not use the `Application Support` directory for the API keys?
+
+`~/.config` is the standard config folder for Unix systems. It's easier to access from the command line.
+
 ## Vocabulary
 
 > Does `pun` limit the vocabulary it uses?
