@@ -1,9 +1,9 @@
 (ns core
   (:require
    [cheshire.core :refer [parse-string]]
+   [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
-   [clojure.string :as string]
-   [clj-yaml.core :as yaml])
+   [clojure.string :as string])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
