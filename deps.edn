@@ -1,1 +1,2 @@
-{:deps {cheshire/cheshire {:mvn/version "5.13.0"}}}
+{:deps {cheshire/cheshire {:mvn/version "5.13.0"}
+        clj-commons/clj-yaml {:mvn/version "1.0.29"}}}
