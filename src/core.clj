@@ -75,6 +75,17 @@
             :messages [{:role "user" :content (str "Phrases:\n" phrase "\ntouchstone")}
                        {:role "assistant" :content (str "{\n\"" phrase "\"")}]}})
 
+(defn get-batch
+  "Retrieve a message batch"
+  [batch-id]
+  (let [api-key (get-anthropic-key)
+        url (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
+        headers {:x-api-key api-key
+                 :anthropic-version "2023-06-01"}]
+    (client/get url
+                {:headers headers
+                 :as :json})))
+
 (defn -main
   "The main entry point for the application"
   [& args]
