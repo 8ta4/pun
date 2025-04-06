@@ -62,6 +62,9 @@
                   :body (cheshire.core/generate-string body)
                   :as :json})))
 
+(def system
+  (slurp "system.txt"))
+
 (defn -main
   "The main entry point for the application"
   [& args]
