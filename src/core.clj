@@ -50,8 +50,7 @@
 
 (def anthropic-version "2023-06-01")
 
-(defn send-batch
-  "Send a batch of Message creation requests"
+(defn send-batch*
   [requests]
   (let [api-key (get-anthropic-key)
         url "https://api.anthropic.com/v1/messages/batches"
@@ -80,6 +79,10 @@
 (defn create-requests
   [phrases]
   (map create-request phrases))
+
+(defn send-batch
+  [phrases]
+  (send-batch* (create-requests phrases)))
 
 (defn get-batch
   "Retrieve a message batch"
