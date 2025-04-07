@@ -10,10 +10,10 @@
    (java.util.zip GZIPInputStream)))
 
 (def cache-path
-  (str (System/getProperty "user.home") "/.cache/pun/"))
+  (io/file (System/getProperty "user.home") ".cache/pun"))
 
 (def wiktextract-data-path
-  (str cache-path "raw-wiktextract-data.jsonl.gz"))
+  (io/file cache-path "raw-wiktextract-data.jsonl.gz"))
 
 (defn extract
   []
@@ -28,7 +28,13 @@
        (map :word)))
 
 (def vocabulary-path
-  (str cache-path "vocabulary.txt"))
+  (io/file cache-path "vocabulary.txt"))
+
+(defn spit-make-parents
+  "Like clojure.core/spit, but creates parent directories."
+  [f content & options]
+  (io/make-parents f)
+  (apply spit f content options))
 
 (defn save
   []
@@ -36,10 +42,10 @@
        distinct
        sort
        (string/join "\n")
-       (spit vocabulary-path)))
+       (spit-make-parents vocabulary-path)))
 
 (def config-path
-  (str (System/getProperty "user.home") "/.config/pun/config.yaml"))
+  (io/file (System/getProperty "user.home") ".config/pun/config.yaml"))
 
 (defn get-anthropic-key
   []
@@ -95,21 +101,29 @@
                          :anthropic-version anthropic-version}
                :as :json}))
 
-(defn get-latest-results-url
+(defn get-latest-batch
   []
   (-> (list-batches)
       :body
       :data
       ; "Most recently created batches are returned first."
       ; https://docs.anthropic.com/en/api/listing-message-batches
-      first
-      :results_url))
+      first))
 
 (defn get-batch-results
   [results-url]
   (client/get results-url
               {:headers {:x-api-key (get-anthropic-key)
                          :anthropic-version anthropic-version}}))
+
+(defn save-latest-batch-results
+  []
+  (let [latest-batch (get-latest-batch)]
+    (->> latest-batch
+         :results_url
+         get-batch-results
+         :body
+         (spit-make-parents (io/file cache-path "results" (str (:id latest-batch) ".jsonl"))))))
 
 (defn -main
   "The main entry point for the application"
