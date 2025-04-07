@@ -10,10 +10,10 @@
    (java.util.zip GZIPInputStream)))
 
 (def cache-path
-  (str (System/getProperty "user.home") "/.cache/pun/"))
+  (io/file (System/getProperty "user.home") ".cache/pun"))
 
 (def wiktextract-data-path
-  (str cache-path "raw-wiktextract-data.jsonl.gz"))
+  (io/file cache-path "raw-wiktextract-data.jsonl.gz"))
 
 (defn extract
   []
@@ -28,7 +28,7 @@
        (map :word)))
 
 (def vocabulary-path
-  (str cache-path "vocabulary.txt"))
+  (io/file cache-path "vocabulary.txt"))
 
 (defn save
   []
@@ -39,7 +39,7 @@
        (spit vocabulary-path)))
 
 (def config-path
-  (str (System/getProperty "user.home") "/.config/pun/config.yaml"))
+  (io/file (System/getProperty "user.home") ".config/pun/config.yaml"))
 
 (defn get-anthropic-key
   []
