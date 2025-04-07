@@ -101,21 +101,29 @@
                          :anthropic-version anthropic-version}
                :as :json}))
 
-(defn get-latest-results-url
+(defn get-latest-batch
   []
   (-> (list-batches)
       :body
       :data
       ; "Most recently created batches are returned first."
       ; https://docs.anthropic.com/en/api/listing-message-batches
-      first
-      :results_url))
+      first))
 
 (defn get-batch-results
   [results-url]
   (client/get results-url
               {:headers {:x-api-key (get-anthropic-key)
                          :anthropic-version anthropic-version}}))
+
+(defn save-latest-batch-results
+  []
+  (let [latest-batch (get-latest-batch)]
+    (->> latest-batch
+         :results_url
+         get-batch-results
+         :body
+         (spit-make-parents (io/file cache-path "results" (str (:id latest-batch) ".jsonl"))))))
 
 (defn -main
   "The main entry point for the application"
