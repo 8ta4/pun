@@ -103,6 +103,8 @@
   (-> (list-batches)
       :body
       :data
+      ; "Most recently created batches are returned first."
+      ; https://docs.anthropic.com/en/api/listing-message-batches
       first))
 
 (defn -main
