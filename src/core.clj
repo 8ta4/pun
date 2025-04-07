@@ -52,9 +52,8 @@
 
 (defn send-batch*
   [requests]
-  (let [api-key (get-anthropic-key)
-        url "https://api.anthropic.com/v1/messages/batches"
-        headers {:x-api-key api-key
+  (let [url "https://api.anthropic.com/v1/messages/batches"
+        headers {:x-api-key (get-anthropic-key)
                  :anthropic-version anthropic-version
                  :content-type "application/json"}
         body {:requests requests}]
@@ -87,9 +86,8 @@
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
-  (let [api-key (get-anthropic-key)
-        url (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
-        headers {:x-api-key api-key
+  (let [url (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
+        headers {:x-api-key (get-anthropic-key)
                  :anthropic-version anthropic-version}]
     (client/get url
                 {:headers headers
@@ -97,9 +95,8 @@
 
 (defn list-batches
   []
-  (let [api-key (get-anthropic-key)
-        url "https://api.anthropic.com/v1/messages/batches"
-        headers {:x-api-key api-key
+  (let [url "https://api.anthropic.com/v1/messages/batches"
+        headers {:x-api-key (get-anthropic-key)
                  :anthropic-version anthropic-version}]
     (client/get url
                 {:headers headers
