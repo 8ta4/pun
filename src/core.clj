@@ -105,18 +105,15 @@
                 {:headers headers
                  :as :json})))
 
-(defn get-latest-batch
+(defn get-latest-results-url
   []
   (-> (list-batches)
       :body
       :data
       ; "Most recently created batches are returned first."
       ; https://docs.anthropic.com/en/api/listing-message-batches
-      first))
-
-(defn latest-batch-in-progress?
-  []
-  (= "in_progress" (:processing_status (get-latest-batch))))
+      first
+      :results_url))
 
 (defn -main
   "The main entry point for the application"
