@@ -50,8 +50,7 @@
 
 (def anthropic-version "2023-06-01")
 
-(defn send-batch
-  "Send a batch of Message creation requests"
+(defn send-batch*
   [requests]
   (let [api-key (get-anthropic-key)
         url "https://api.anthropic.com/v1/messages/batches"
@@ -77,6 +76,14 @@
             :messages [{:role "user" :content (str "Phrases:\n" phrase "\ntouchstone")}
                        {:role "assistant" :content (str "{\n\"" phrase "\"")}]}})
 
+(defn create-requests
+  [phrases]
+  (map create-request phrases))
+
+(defn send-batch
+  [phrases]
+  (send-batch* (create-requests phrases)))
+
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
@@ -87,6 +94,29 @@
     (client/get url
                 {:headers headers
                  :as :json})))
+
+(defn list-batches
+  []
+  (let [api-key (get-anthropic-key)
+        url "https://api.anthropic.com/v1/messages/batches"
+        headers {:x-api-key api-key
+                 :anthropic-version anthropic-version}]
+    (client/get url
+                {:headers headers
+                 :as :json})))
+
+(defn get-latest-batch
+  []
+  (-> (list-batches)
+      :body
+      :data
+      ; "Most recently created batches are returned first."
+      ; https://docs.anthropic.com/en/api/listing-message-batches
+      first))
+
+(defn latest-batch-in-progress?
+  []
+  (= "in_progress" (:processing_status (get-latest-batch))))
 
 (defn -main
   "The main entry point for the application"
