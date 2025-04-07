@@ -98,6 +98,13 @@
                 {:headers headers
                  :as :json})))
 
+(defn get-latest-batch
+  []
+  (-> (list-batches)
+      :body
+      :data
+      first))
+
 (defn -main
   "The main entry point for the application"
   [& args]
