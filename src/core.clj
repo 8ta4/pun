@@ -114,6 +114,10 @@
       ; https://docs.anthropic.com/en/api/listing-message-batches
       first))
 
+(defn latest-batch-in-progress?
+  []
+  (= "in_progress" (:processing_status (get-latest-batch))))
+
 (defn -main
   "The main entry point for the application"
   [& args]
