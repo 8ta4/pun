@@ -52,16 +52,12 @@
 
 (defn send-batch*
   [requests]
-  (let [api-key (get-anthropic-key)
-        url "https://api.anthropic.com/v1/messages/batches"
-        headers {:x-api-key api-key
-                 :anthropic-version anthropic-version
-                 :content-type "application/json"}
-        body {:requests requests}]
-    (client/post url
-                 {:headers headers
-                  :body (cheshire.core/generate-string body)
-                  :as :json})))
+  (client/post "https://api.anthropic.com/v1/messages/batches"
+               {:headers {:x-api-key (get-anthropic-key)
+                          :anthropic-version anthropic-version
+                          :content-type "application/json"}
+                :body (cheshire.core/generate-string {:requests requests})
+                :as :json}))
 
 (def system
   (slurp "system.txt"))
@@ -87,36 +83,33 @@
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
-  (let [api-key (get-anthropic-key)
-        url (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
-        headers {:x-api-key api-key
-                 :anthropic-version anthropic-version}]
-    (client/get url
-                {:headers headers
-                 :as :json})))
+  (client/get (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
+              {:headers {:x-api-key (get-anthropic-key)
+                         :anthropic-version anthropic-version}
+               :as :json}))
 
 (defn list-batches
   []
-  (let [api-key (get-anthropic-key)
-        url "https://api.anthropic.com/v1/messages/batches"
-        headers {:x-api-key api-key
-                 :anthropic-version anthropic-version}]
-    (client/get url
-                {:headers headers
-                 :as :json})))
+  (client/get "https://api.anthropic.com/v1/messages/batches"
+              {:headers {:x-api-key (get-anthropic-key)
+                         :anthropic-version anthropic-version}
+               :as :json}))
 
-(defn get-latest-batch
+(defn get-latest-results-url
   []
   (-> (list-batches)
       :body
       :data
       ; "Most recently created batches are returned first."
       ; https://docs.anthropic.com/en/api/listing-message-batches
-      first))
+      first
+      :results_url))
 
-(defn latest-batch-in-progress?
-  []
-  (= "in_progress" (:processing_status (get-latest-batch))))
+(defn get-batch-results
+  [results-url]
+  (client/get results-url
+              {:headers {:x-api-key (get-anthropic-key)
+                         :anthropic-version anthropic-version}}))
 
 (defn -main
   "The main entry point for the application"
