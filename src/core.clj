@@ -88,6 +88,16 @@
                 {:headers headers
                  :as :json})))
 
+(defn list-batches
+  []
+  (let [api-key (get-anthropic-key)
+        url "https://api.anthropic.com/v1/messages/batches"
+        headers {:x-api-key api-key
+                 :anthropic-version anthropic-version}]
+    (client/get url
+                {:headers headers
+                 :as :json})))
+
 (defn -main
   "The main entry point for the application"
   [& args]
