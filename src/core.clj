@@ -77,6 +77,10 @@
             :messages [{:role "user" :content (str "Phrases:\n" phrase "\ntouchstone")}
                        {:role "assistant" :content (str "{\n\"" phrase "\"")}]}})
 
+(defn create-requests
+  [phrases]
+  (map create-request phrases))
+
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
