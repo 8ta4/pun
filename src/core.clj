@@ -52,15 +52,12 @@
 
 (defn send-batch*
   [requests]
-  (let [url "https://api.anthropic.com/v1/messages/batches"
-        headers {:x-api-key (get-anthropic-key)
-                 :anthropic-version anthropic-version
-                 :content-type "application/json"}
-        body {:requests requests}]
-    (client/post url
-                 {:headers headers
-                  :body (cheshire.core/generate-string body)
-                  :as :json})))
+  (client/post "https://api.anthropic.com/v1/messages/batches"
+               {:headers {:x-api-key (get-anthropic-key)
+                          :anthropic-version anthropic-version
+                          :content-type "application/json"}
+                :body (cheshire.core/generate-string {:requests requests})
+                :as :json}))
 
 (def system
   (slurp "system.txt"))
@@ -86,21 +83,17 @@
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
-  (let [url (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
-        headers {:x-api-key (get-anthropic-key)
-                 :anthropic-version anthropic-version}]
-    (client/get url
-                {:headers headers
-                 :as :json})))
+  (client/get (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
+              {:headers {:x-api-key (get-anthropic-key)
+                         :anthropic-version anthropic-version}
+               :as :json}))
 
 (defn list-batches
   []
-  (let [url "https://api.anthropic.com/v1/messages/batches"
-        headers {:x-api-key (get-anthropic-key)
-                 :anthropic-version anthropic-version}]
-    (client/get url
-                {:headers headers
-                 :as :json})))
+  (client/get "https://api.anthropic.com/v1/messages/batches"
+              {:headers {:x-api-key (get-anthropic-key)
+                         :anthropic-version anthropic-version}
+               :as :json}))
 
 (defn get-latest-results-url
   []
