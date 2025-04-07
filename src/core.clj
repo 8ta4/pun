@@ -109,8 +109,7 @@
   [results-url]
   (client/get results-url
               {:headers {:x-api-key (get-anthropic-key)
-                         :anthropic-version anthropic-version}
-               :as :json}))
+                         :anthropic-version anthropic-version}}))
 
 (defn -main
   "The main entry point for the application"
