@@ -27,8 +27,7 @@ pom.xml.asc
 .cpcache/
 
 ### clj-kondo
-# https://github.com/clj-kondo/clj-kondo/blob/b48c405351da8baa9f57259194129e0dd46b77b1/.gitignore#L66C1-L66C21
-**/.clj-kondo/.cache
+.clj-kondo
 
 ### Language Server Protocol
 .lsp/.cache
