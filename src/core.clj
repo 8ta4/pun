@@ -105,6 +105,13 @@
       first
       :results_url))
 
+(defn get-batch-results
+  [results-url]
+  (client/get results-url
+              {:headers {:x-api-key (get-anthropic-key)
+                         :anthropic-version anthropic-version}
+               :as :json}))
+
 (defn -main
   "The main entry point for the application"
   [& args]
