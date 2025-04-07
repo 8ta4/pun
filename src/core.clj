@@ -30,13 +30,19 @@
 (def vocabulary-path
   (io/file cache-path "vocabulary.txt"))
 
+(defn spit-make-parents
+  "Like clojure.core/spit, but creates parent directories."
+  [f content & options]
+  (io/make-parents f)
+  (apply spit f content options))
+
 (defn save
   []
   (->> (extract)
        distinct
        sort
        (string/join "\n")
-       (spit vocabulary-path)))
+       (spit-make-parents vocabulary-path)))
 
 (def config-path
   (io/file (System/getProperty "user.home") ".config/pun/config.yaml"))
