@@ -133,7 +133,8 @@
   (->> results-path
        .listFiles
        (mapcat (comp string/split-lines slurp))
-       (map #(parse-string % keyword))))
+       (map #(parse-string % keyword))
+       (filter (comp (partial = "succeeded") :type :result))))
 
 (defn -main
   "The main entry point for the application"
