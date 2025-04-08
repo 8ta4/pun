@@ -116,6 +116,9 @@
               {:headers {:x-api-key (get-anthropic-key)
                          :anthropic-version anthropic-version}}))
 
+(def results-path
+  (io/file cache-path "results"))
+
 (defn save-latest-batch-results
   []
   (let [latest-batch (get-latest-batch)]
@@ -123,7 +126,14 @@
          :results_url
          get-batch-results
          :body
-         (spit-make-parents (io/file cache-path "results" (str (:id latest-batch) ".jsonl"))))))
+         (spit-make-parents (io/file results-path (str (:id latest-batch) ".jsonl"))))))
+
+(defn load-results
+  []
+  (->> results-path
+       .listFiles
+       (mapcat (comp string/split-lines slurp))
+       (map #(parse-string % keyword))))
 
 (defn -main
   "The main entry point for the application"
