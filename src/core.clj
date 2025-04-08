@@ -140,6 +140,10 @@
   []
   (map :custom_id (load-results)))
 
+(defn load-vocabulary
+  []
+  (string/split-lines (slurp vocabulary-path)))
+
 (defn -main
   "The main entry point for the application"
   [& args]
