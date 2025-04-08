@@ -4,6 +4,7 @@
    [clj-http.client :as client]
    [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
+   [clojure.set :as set]
    [clojure.string :as string])
   (:import
    (java.io BufferedReader InputStreamReader)
@@ -136,13 +137,17 @@
        (map #(parse-string % keyword))
        (filter (comp (partial = "succeeded") :type :result))))
 
-(defn get-successful-phrases
+(defn load-successful-phrases
   []
-  (map :custom_id (load-results)))
+  (set (map :custom_id (load-results))))
 
 (defn load-vocabulary
   []
-  (string/split-lines (slurp vocabulary-path)))
+  (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
+
+(defn get-remaining-phrases
+  []
+  (set/difference (load-vocabulary) (load-successful-phrases)))
 
 (defn -main
   "The main entry point for the application"
