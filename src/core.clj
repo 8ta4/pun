@@ -3,6 +3,7 @@
    [cheshire.core :refer [parse-string]]
    [clj-http.client :as client]
    [clj-yaml.core :as yaml]
+   [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.set :as set]
    [clojure.string :as string])
@@ -69,6 +70,10 @@
 (def system
   (slurp "system.txt"))
 
+(defn generate-prefill
+  [phrase]
+  (str "{\n\"" phrase "\""))
+
 (defn create-request
   [phrase]
   {:custom_id phrase
@@ -77,7 +82,7 @@
             :temperature 0
             :system system
             :messages [{:role "user" :content (str "Phrases:\n" phrase "\ntouchstone")}
-                       {:role "assistant" :content (str "{\n\"" phrase "\"")}]}})
+                       {:role "assistant" :content (generate-prefill phrase)}]}})
 
 (defn create-requests
   [phrases]
@@ -148,6 +153,17 @@
 (defn get-remaining-phrases
   []
   (set/difference (load-vocabulary) (load-successful-phrases)))
+
+(defn reconstruct-and-parse
+  [successful-result]
+  (->> successful-result
+       :result
+       :message
+       :content
+       first
+       :text
+       (str (generate-prefill (:custom_id successful-result)) " ")
+       edn/read-string))
 
 (defn -main
   "The main entry point for the application"
