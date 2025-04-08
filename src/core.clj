@@ -136,6 +136,10 @@
        (map #(parse-string % keyword))
        (filter (comp (partial = "succeeded") :type :result))))
 
+(defn get-successful-phrases
+  []
+  (map :custom_id (load-results)))
+
 (defn -main
   "The main entry point for the application"
   [& args]
