@@ -6,7 +6,9 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.set :as set]
-   [clojure.string :as string])
+   [clojure.string :as string]
+   [incanter.stats :as stats]
+   [com.rpl.specter :as s])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
@@ -154,20 +156,18 @@
   []
   (set/difference (load-vocabulary) (load-successful-phrases)))
 
-(defn reconstruct-and-parse
+(defn get-result-text
   [successful-result]
   (->> successful-result
        :result
        :message
        :content
        first
-       :text
-       (str (generate-prefill (:custom_id successful-result)) " ")
-       edn/read-string))
+       :text))
 
 (defn build-score-entry
   [successful-result]
-  {(:custom_id successful-result) (reconstruct-and-parse successful-result)})
+  {(:custom_id successful-result) (get-result-text successful-result)})
 
 (def raw-path
   (io/file cache-path "raw.edn"))
@@ -176,8 +176,48 @@
   []
   (->> (load-results)
        (map build-score-entry)
-       (apply merge)
-       (spit raw-path)))
+       (reduce merge)
+       (spit-make-parents raw-path)))
+
+(defn load-and-parse-scores
+  []
+  (->> raw-path
+       slurp
+       edn/read-string
+       (map (fn [[k v]] (edn/read-string (str (generate-prefill k) " " v))))))
+
+(def benchmark-word
+  "touchstone")
+
+(def compute-mean
+  (comp (partial stats/mean)
+        (partial s/select* [s/ALL benchmark-word])))
+
+(defn normalize-score-entry
+  [mean-benchmark-score score-entry]
+  (let [benchmark-score (get score-entry benchmark-word)
+        target-key (-> score-entry
+                       keys
+                       set
+                       (disj benchmark-word)
+                       first)
+        target-score (get score-entry target-key)]
+    {target-key (if (<= target-score benchmark-score)
+                  (/ (* target-score mean-benchmark-score) benchmark-score)
+                  (- 100.0
+                     (/ (* (- 100.0 target-score) (- 100.0 mean-benchmark-score))
+                        (- 100.0 benchmark-score))))}))
+
+(def normalized-path
+  (io/file cache-path "normalized.edn"))
+
+(defn save-normalized
+  []
+  (let [scores (load-and-parse-scores)]
+    (->> scores
+         (map (partial normalize-score-entry (compute-mean scores)))
+         (reduce merge)
+         (spit-make-parents normalized-path))))
 
 (defn -main
   "The main entry point for the application"
