@@ -165,6 +165,20 @@
        (str (generate-prefill (:custom_id successful-result)) " ")
        edn/read-string))
 
+(defn build-score-entry
+  [successful-result]
+  {(:custom_id successful-result) (reconstruct-and-parse successful-result)})
+
+(def raw-path
+  (io/file cache-path "raw.edn"))
+
+(defn save-raw
+  []
+  (->> (load-results)
+       (map build-score-entry)
+       (apply merge)
+       (spit raw-path)))
+
 (defn -main
   "The main entry point for the application"
   [& args]
