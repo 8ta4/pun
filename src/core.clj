@@ -177,6 +177,13 @@
        (apply merge)
        (spit raw-path)))
 
+(defn load-and-parse-scores
+  []
+  (->> raw-path
+       slurp
+       edn/read-string
+       (map (fn [[k v]] (edn/read-string (str (generate-prefill k) " " v))))))
+
 (defn -main
   "The main entry point for the application"
   [& args]
