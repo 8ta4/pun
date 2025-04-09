@@ -6,7 +6,9 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.set :as set]
-   [clojure.string :as string])
+   [clojure.string :as string]
+   [incanter.stats :as stats]
+   [com.rpl.specter :as s])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
@@ -183,6 +185,13 @@
        slurp
        edn/read-string
        (map (fn [[k v]] (edn/read-string (str (generate-prefill k) " " v))))))
+
+(def benchmark-word
+  "touchstone")
+
+(def compute-mean
+  (comp (partial stats/mean)
+        (partial s/select* [s/ALL benchmark-word])))
 
 (defn -main
   "The main entry point for the application"
