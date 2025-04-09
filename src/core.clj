@@ -154,7 +154,7 @@
   []
   (set/difference (load-vocabulary) (load-successful-phrases)))
 
-(defn reconstruct-and-parse
+(defn get-result-text
   [successful-result]
   (->> successful-result
        :result
@@ -165,7 +165,7 @@
 
 (defn build-score-entry
   [successful-result]
-  {(:custom_id successful-result) (reconstruct-and-parse successful-result)})
+  {(:custom_id successful-result) (get-result-text successful-result)})
 
 (def raw-path
   (io/file cache-path "raw.edn"))
