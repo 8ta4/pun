@@ -193,6 +193,14 @@
   (comp (partial stats/mean)
         (partial s/select* [s/ALL benchmark-word])))
 
+(defn normalize-score-entry
+  [benchmark-mean score-entry])
+
+(defn normalize-scores
+  []
+  (let [scores (load-and-parse-scores)]
+    (map (partial normalize-score-entry (compute-mean scores)) scores)))
+
 (defn -main
   "The main entry point for the application"
   [& args]
