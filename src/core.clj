@@ -176,8 +176,8 @@
   []
   (->> (load-results)
        (map build-score-entry)
-       (apply merge)
-       (spit raw-path)))
+       (reduce merge)
+       (spit-make-parents raw-path)))
 
 (defn load-and-parse-scores
   []
@@ -194,12 +194,30 @@
         (partial s/select* [s/ALL benchmark-word])))
 
 (defn normalize-score-entry
-  [benchmark-mean score-entry])
+  [mean-benchmark-score score-entry]
+  (let [benchmark-score (get score-entry benchmark-word)
+        target-key (-> score-entry
+                       keys
+                       set
+                       (disj benchmark-word)
+                       first)
+        target-score (get score-entry target-key)]
+    {target-key (if (<= target-score benchmark-score)
+                  (/ (* target-score mean-benchmark-score) benchmark-score)
+                  (- 100.0
+                     (/ (* (- 100.0 target-score) (- 100.0 mean-benchmark-score))
+                        (- 100.0 benchmark-score))))}))
 
-(defn normalize-scores
+(def normalized-path
+  (io/file cache-path "normalized.edn"))
+
+(defn save-normalized
   []
   (let [scores (load-and-parse-scores)]
-    (map (partial normalize-score-entry (compute-mean scores)) scores)))
+    (->> scores
+         (map (partial normalize-score-entry (compute-mean scores)))
+         (reduce merge)
+         (spit-make-parents normalized-path))))
 
 (defn -main
   "The main entry point for the application"
