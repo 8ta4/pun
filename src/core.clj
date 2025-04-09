@@ -161,9 +161,7 @@
        :message
        :content
        first
-       :text
-       (str (generate-prefill (:custom_id successful-result)) " ")
-       edn/read-string))
+       :text))
 
 (defn build-score-entry
   [successful-result]
