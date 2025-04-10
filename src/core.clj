@@ -233,8 +233,3 @@
          (map (partial normalize-score-entry (compute-mean scores)))
          (reduce merge)
          (spit-make-parents normalized-path))))
-
-(defn -main
-  "The main entry point for the application"
-  [& args]
-  (println "Hello, World!"))
