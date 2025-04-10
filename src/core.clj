@@ -19,7 +19,7 @@
 (def wiktextract-data-path
   (io/file cache-path "raw-wiktextract-data.jsonl.gz"))
 
-(defn extract
+(defn load-wiktextract
   []
   (->> wiktextract-data-path
        io/input-stream
@@ -40,9 +40,9 @@
   (io/make-parents f)
   (apply spit f content options))
 
-(defn save
+(defn save-vocabulary
   []
-  (->> (extract)
+  (->> (load-wiktextract)
        distinct
        sort
        (string/join "\n")
@@ -60,7 +60,7 @@
 
 (def anthropic-version "2023-06-01")
 
-(defn send-batch*
+(defn post-batch
   [requests]
   (client/post "https://api.anthropic.com/v1/messages/batches"
                {:headers {:x-api-key (get-anthropic-key)
@@ -92,7 +92,7 @@
 
 (defn send-batch
   [phrases]
-  (send-batch* (create-requests phrases)))
+  (post-batch (create-requests phrases)))
 
 (defn get-batch
   "Retrieve a message batch"
@@ -179,6 +179,21 @@
        (reduce merge)
        (spit-make-parents raw-path)))
 
+(def batch-size
+; https://docs.anthropic.com/en/api/rate-limits
+  100000)
+
+(def sleep-duration
+  60000)
+
+(defn manage-workflow
+  []
+  (when (:results_url (get-latest-batch))
+    (save-latest-batch-results)
+    (send-batch (take batch-size (get-remaining-phrases))))
+  (Thread/sleep sleep-duration)
+  (recur))
+
 (defn load-and-parse-scores
   []
   (->> raw-path
@@ -218,8 +233,3 @@
          (map (partial normalize-score-entry (compute-mean scores)))
          (reduce merge)
          (spit-make-parents normalized-path))))
-
-(defn -main
-  "The main entry point for the application"
-  [& args]
-  (println "Hello, World!"))
