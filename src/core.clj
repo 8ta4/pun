@@ -179,6 +179,21 @@
        (reduce merge)
        (spit-make-parents raw-path)))
 
+(def batch-size
+; https://docs.anthropic.com/en/api/rate-limits
+  100000)
+
+(def sleep-duration
+  60000)
+
+(defn manage-workflow
+  []
+  (when (:results_url (get-latest-batch))
+    (save-latest-batch-results)
+    (send-batch (take batch-size (get-remaining-phrases))))
+  (Thread/sleep sleep-duration)
+  (recur))
+
 (defn load-and-parse-scores
   []
   (->> raw-path
