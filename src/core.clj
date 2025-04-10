@@ -91,10 +91,6 @@
   [phrases]
   (map create-request phrases))
 
-(defn send-batch
-  [phrases]
-  (post-batch (create-requests phrases)))
-
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
@@ -110,14 +106,11 @@
                          :anthropic-version anthropic-version}
                :as :json}))
 
-(defn get-latest-batch
+(defn fetch-batch-data
   []
   (-> (list-batches)
       :body
-      :data
-      ; "Most recently created batches are returned first."
-      ; https://docs.anthropic.com/en/api/listing-message-batches
-      first))
+      :data))
 
 (defn get-batch-results
   [results-url]
@@ -130,7 +123,9 @@
 
 (defn save-latest-batch-results
   []
-  (let [latest-batch (get-latest-batch)]
+; "Most recently created batches are returned first."
+; https://docs.anthropic.com/en/api/listing-message-batches
+  (let [latest-batch (first (fetch-batch-data))]
     (->> latest-batch
          :results_url
          get-batch-results
@@ -187,12 +182,26 @@
 (def sleep-duration
   60000)
 
+(defn empty-sequential?
+  [x]
+  (and (sequential? x) (empty? x)))
+
+(defn send-batch
+  []
+  (->> (get-remaining-phrases)
+       (take batch-size)
+       create-requests
+       post-batch))
+
 (defn manage-workflow
   []
-  (when (:results_url (get-latest-batch))
-    (println "Saving results...")
+  (when (empty-sequential? (fetch-batch-data))
+    (println "Sending initial batch...")
+    (send-batch))
+  (when (:results_url (first (fetch-batch-data)))
+    (println "Saving results and queueing next batch...")
     (save-latest-batch-results)
-    (send-batch (take batch-size (get-remaining-phrases))))
+    (send-batch))
   (Thread/sleep sleep-duration)
   (recur))
 
