@@ -233,3 +233,11 @@
          (map (partial normalize-score-entry (compute-mean scores)))
          (reduce merge)
          (spit-make-parents normalized-path))))
+
+(defn -main
+  [& args]
+  (case (first args)
+    "vocabulary" (save-vocabulary)
+    "raw" (manage-workflow)
+    "normalized" (save-normalized)
+    (println "Invalid command.")))
