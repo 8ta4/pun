@@ -196,10 +196,10 @@
 (defn manage-workflow
   []
   (when (empty-sequential? (fetch-batch-data))
-    (println "Sending batch...")
+    (println "Sending initial batch...")
     (send-batch))
   (when (:results_url (first (fetch-batch-data)))
-    (println "Saving results...")
+    (println "Saving results and queueing next batch...")
     (save-latest-batch-results)
     (send-batch))
   (Thread/sleep sleep-duration)
