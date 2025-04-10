@@ -91,10 +91,6 @@
   [phrases]
   (map create-request phrases))
 
-(defn send-batch
-  [phrases]
-  (post-batch (create-requests phrases)))
-
 (defn get-batch
   "Retrieve a message batch"
   [batch-id]
@@ -190,12 +186,22 @@
   [x]
   (and (sequential? x) (empty? x)))
 
+(defn send-batch
+  []
+  (->> (get-remaining-phrases)
+       (take batch-size)
+       create-requests
+       post-batch))
+
 (defn manage-workflow
   []
+  (when (empty-sequential? (fetch-batch-data))
+    (println "Sending batch...")
+    (send-batch))
   (when (:results_url (first (fetch-batch-data)))
     (println "Saving results...")
     (save-latest-batch-results)
-    (send-batch (take batch-size (get-remaining-phrases))))
+    (send-batch))
   (Thread/sleep sleep-duration)
   (recur))
 
