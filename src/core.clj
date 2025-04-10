@@ -110,14 +110,11 @@
                          :anthropic-version anthropic-version}
                :as :json}))
 
-(defn get-latest-batch
+(defn fetch-batch-data
   []
   (-> (list-batches)
       :body
-      :data
-      ; "Most recently created batches are returned first."
-      ; https://docs.anthropic.com/en/api/listing-message-batches
-      first))
+      :data))
 
 (defn get-batch-results
   [results-url]
@@ -130,7 +127,9 @@
 
 (defn save-latest-batch-results
   []
-  (let [latest-batch (get-latest-batch)]
+; "Most recently created batches are returned first."
+; https://docs.anthropic.com/en/api/listing-message-batches
+  (let [latest-batch (first (fetch-batch-data))]
     (->> latest-batch
          :results_url
          get-batch-results
@@ -189,7 +188,7 @@
 
 (defn manage-workflow
   []
-  (when (:results_url (get-latest-batch))
+  (when (:results_url (first (fetch-batch-data)))
     (println "Saving results...")
     (save-latest-batch-results)
     (send-batch (take batch-size (get-remaining-phrases))))
