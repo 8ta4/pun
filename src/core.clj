@@ -19,7 +19,7 @@
 (def wiktextract-data-path
   (io/file cache-path "raw-wiktextract-data.jsonl.gz"))
 
-(defn extract
+(defn load-wiktextract
   []
   (->> wiktextract-data-path
        io/input-stream
@@ -40,9 +40,9 @@
   (io/make-parents f)
   (apply spit f content options))
 
-(defn save
+(defn save-vocabulary
   []
-  (->> (extract)
+  (->> (load-wiktextract)
        distinct
        sort
        (string/join "\n")
