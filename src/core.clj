@@ -42,6 +42,7 @@
 
 (defn save-vocabulary
   []
+  (println "Generating vocabulary...")
   (->> (load-wiktextract)
        distinct
        sort
@@ -189,6 +190,7 @@
 (defn manage-workflow
   []
   (when (:results_url (get-latest-batch))
+    (println "Saving results...")
     (save-latest-batch-results)
     (send-batch (take batch-size (get-remaining-phrases))))
   (Thread/sleep sleep-duration)
@@ -228,6 +230,7 @@
 
 (defn save-normalized
   []
+  (println "Starting normalization process...")
   (let [scores (load-and-parse-scores)]
     (->> scores
          (map (partial normalize-score-entry (compute-mean scores)))
