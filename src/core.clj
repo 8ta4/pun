@@ -60,7 +60,7 @@
 
 (def anthropic-version "2023-06-01")
 
-(defn send-batch*
+(defn post-batch
   [requests]
   (client/post "https://api.anthropic.com/v1/messages/batches"
                {:headers {:x-api-key (get-anthropic-key)
@@ -92,7 +92,7 @@
 
 (defn send-batch
   [phrases]
-  (send-batch* (create-requests phrases)))
+  (post-batch (create-requests phrases)))
 
 (defn get-batch
   "Retrieve a message batch"
