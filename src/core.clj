@@ -186,6 +186,10 @@
 (def sleep-duration
   60000)
 
+(defn empty-sequential?
+  [x]
+  (and (sequential? x) (empty? x)))
+
 (defn manage-workflow
   []
   (when (:results_url (first (fetch-batch-data)))
