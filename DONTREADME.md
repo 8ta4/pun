@@ -46,7 +46,7 @@ The target response time is one second when the background server is alive. "[10
 
 > What is the storage location for the API key?
 
-The API key storage location is `~/.config/accent/config.yaml`.
+The API key storage location is `~/.config/pun/config.yaml`.
 
 > Why choose YAML over JSON for storing the API keys?
 
