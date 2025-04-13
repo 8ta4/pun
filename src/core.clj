@@ -205,16 +205,16 @@
 
 (defn poll-batches
   []
-  (when-not (empty? (get-remaining-phrases))
-    (when (empty-sequential? (fetch-batch-data))
-      (println "Sending initial batch...")
-      (send-batch))
-    (when (:results_url (first (fetch-batch-data)))
-      (println "Saving results and queueing next batch...")
-      (save-latest-batch-results)
-      (send-batch))
-    (Thread/sleep sleep-duration)
-    (recur)))
+  (cond
+    (empty? (get-remaining-phrases)) nil
+    (empty-sequential? (fetch-batch-data)) (do (println "Sending initial batch...")
+                                               (send-batch)
+                                               (recur))
+    (:results_url (first (fetch-batch-data))) (do
+                                                (println "Saving results and queueing next batch...")
+                                                (save-latest-batch-results)
+                                                (send-batch)
+                                                (recur))))
 
 (defn load-and-parse-scores
   []
