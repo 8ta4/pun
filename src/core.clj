@@ -217,10 +217,16 @@
 
 (defn load-and-parse-scores
   []
-  (->> raw-path
-       slurp
-       edn/read-string
-       (map (fn [[k v]] (edn/read-string (str (generate-prefill k) " " v))))))
+  (let [id-phrase-map (get-id-phrase-map)]
+    (->> raw-path
+         slurp
+         edn/read-string
+         (map (fn [[k v]]
+                (-> k
+                    id-phrase-map
+                    generate-prefill
+                    (str " " v)
+                    edn/read-string))))))
 
 (def benchmark-word
   "touchstone")
