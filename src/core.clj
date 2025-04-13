@@ -175,10 +175,6 @@
 (def sleep-duration
   60000)
 
-(defn empty-sequential?
-  [x]
-  (and (sequential? x) (empty? x)))
-
 (defn load-vocabulary
   []
   (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
@@ -201,18 +197,6 @@
        (take batch-size)
        create-requests
        post-batch))
-
-(defn poll-batches
-  []
-  (println "Polling batches...")
-  (when (and (not (empty-sequential? (fetch-batch-data)))
-             (:results_url (first (fetch-batch-data))))
-    (save-latest-batch-results))
-  (when-not (empty? (get-remaining-phrases))
-    (println "Queueing next batch...")
-    (send-batch)
-    (Thread/sleep sleep-duration)
-    (recur)))
 
 (defn load-and-parse-scores
   []
@@ -265,7 +249,6 @@
   [& args]
   (case (first args)
     "vocabulary" (save-vocabulary)
-    "poll" (poll-batches)
     "raw" (save-raw)
     "normalized" (save-normalized)
     (println "Invalid command.")))
