@@ -146,18 +146,6 @@
        (map #(parse-string % keyword))
        (filter (comp (partial = "succeeded") :type :result))))
 
-(defn load-successful-phrases
-  []
-  (set (map :custom_id (load-results))))
-
-(defn load-vocabulary
-  []
-  (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
-
-(defn get-remaining-phrases
-  []
-  (set/difference (load-vocabulary) (load-successful-phrases)))
-
 (defn get-result-text
   [successful-result]
   (->> successful-result
@@ -191,6 +179,18 @@
 (defn empty-sequential?
   [x]
   (and (sequential? x) (empty? x)))
+
+(defn load-vocabulary
+  []
+  (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
+
+(defn load-successful-phrases
+  []
+  (set (map :custom_id (load-results))))
+
+(defn get-remaining-phrases
+  []
+  (set/difference (load-vocabulary) (load-successful-phrases)))
 
 (defn send-batch
   []
