@@ -174,7 +174,7 @@
   100000)
 
 (def sleep-duration
-  60000)
+  10000)
 
 (defn load-vocabulary
   []
