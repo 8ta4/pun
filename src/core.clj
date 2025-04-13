@@ -134,7 +134,7 @@
        :body
        (spit-make-parents (io/file results-path (str (:id batch) ".jsonl")))))
 
-(defn save-all-results
+(defn save-results
   []
   (dorun (map save-batch-results (fetch-batch-data))))
 
@@ -213,7 +213,7 @@
   (await-batch)
   (post-batch (create-requests batch)))
 
-(defn submit-remaining-phrases
+(defn submit-batches
   []
   (->> (get-remaining-phrases)
        (partition-all batch-size)
@@ -271,6 +271,8 @@
   [& args]
   (case (first args)
     "vocabulary" (save-vocabulary)
+    "batches" (submit-batches)
+    "results" (save-results)
     "raw" (save-raw)
     "normalized" (save-normalized)
     (println "Invalid command.")))
