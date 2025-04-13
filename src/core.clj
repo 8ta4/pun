@@ -126,16 +126,17 @@
 (def results-path
   (io/file cache-path "results"))
 
-(defn save-latest-batch-results
+(defn save-batch-results
+  [batch]
+  (->> batch
+       :results_url
+       get-batch-results
+       :body
+       (spit-make-parents (io/file results-path (str (:id batch) ".jsonl")))))
+
+(defn save-all-results
   []
-; "Most recently created batches are returned first."
-; https://docs.anthropic.com/en/api/listing-message-batches
-  (let [latest-batch (first (fetch-batch-data))]
-    (->> latest-batch
-         :results_url
-         get-batch-results
-         :body
-         (spit-make-parents (io/file results-path (str (:id latest-batch) ".jsonl"))))))
+  (dorun (map save-batch-results (fetch-batch-data))))
 
 (defn load-results
   []
