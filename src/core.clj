@@ -75,9 +75,8 @@
 (def system
   (slurp "system.txt"))
 
-(defn generate-prefill
-  [phrase]
-  (str "{\n\"" phrase "\""))
+(def generate-prefill
+  (comp (partial str "{\n") pr-str))
 
 (def generate-id
   (comp codecs/bytes->hex hash/sha256))
