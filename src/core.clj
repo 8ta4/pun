@@ -212,6 +212,7 @@
 (defn wait-and-send-batch
   [batch]
   (await-batch)
+  (println "Sending batch...")
   (post-batch (create-requests batch)))
 
 (defn submit-batches
