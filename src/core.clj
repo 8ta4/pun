@@ -210,6 +210,7 @@
   (when-not (empty? (get-remaining-phrases))
     (println "Queueing next batch...")
     (send-batch)
+    (Thread/sleep sleep-duration)
     (recur)))
 
 (defn load-and-parse-scores
