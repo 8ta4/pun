@@ -184,9 +184,13 @@
   []
   (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
 
+(defn get-id-phrase-map
+  []
+  (into {} (map (juxt generate-id identity) (load-vocabulary))))
+
 (defn load-successful-phrases
   []
-  (set (map :custom_id (load-results))))
+  (set (map (comp (get-id-phrase-map) :custom_id) (load-results))))
 
 (defn get-remaining-phrases
   []
