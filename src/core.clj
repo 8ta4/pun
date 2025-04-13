@@ -1,5 +1,7 @@
 (ns core
   (:require
+   [buddy.core.codecs :as codecs]
+   [buddy.core.hash :as hash]
    [cheshire.core :refer [parse-string]]
    [clj-http.client :as client]
    [clj-yaml.core :as yaml]
@@ -77,9 +79,12 @@
   [phrase]
   (str "{\n\"" phrase "\""))
 
+(def generate-id
+  (comp codecs/bytes->hex hash/sha256))
+
 (defn create-request
   [phrase]
-  {:custom_id phrase
+  {:custom_id (generate-id phrase)
    :params {:model "claude-3-7-sonnet-20250219"
             :max_tokens 32
             :temperature 0
