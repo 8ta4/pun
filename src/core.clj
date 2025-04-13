@@ -75,9 +75,8 @@
 (def system
   (slurp "system.txt"))
 
-(defn generate-prefill
-  [phrase]
-  (str "{\n\"" phrase "\""))
+(def generate-prefill
+  (comp (partial str "{\n") pr-str))
 
 (def generate-id
   (comp codecs/bytes->hex hash/sha256))
@@ -205,16 +204,15 @@
 
 (defn poll-batches
   []
-  (cond
-    (empty? (get-remaining-phrases)) nil
-    (empty-sequential? (fetch-batch-data)) (do (println "Sending initial batch...")
-                                               (send-batch)
-                                               (recur))
-    (:results_url (first (fetch-batch-data))) (do
-                                                (println "Saving results and queueing next batch...")
-                                                (save-latest-batch-results)
-                                                (send-batch)
-                                                (recur))))
+  (println "Polling batches...")
+  (when (and (not (empty-sequential? (fetch-batch-data)))
+             (:results_url (first (fetch-batch-data))))
+    (save-latest-batch-results))
+  (when-not (empty? (get-remaining-phrases))
+    (println "Queueing next batch...")
+    (send-batch)
+    (Thread/sleep sleep-duration)
+    (recur)))
 
 (defn load-and-parse-scores
   []
