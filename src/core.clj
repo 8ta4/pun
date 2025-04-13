@@ -204,8 +204,9 @@
 
 (defn poll-batches
   []
-  (when-not (empty-sequential? (fetch-batch-data))
-    (println "Saving results...")
+  (println "Polling batches...")
+  (when (and (not (empty-sequential? (fetch-batch-data)))
+             (:results_url (first (fetch-batch-data))))
     (save-latest-batch-results))
   (when-not (empty? (get-remaining-phrases))
     (println "Queueing next batch...")
