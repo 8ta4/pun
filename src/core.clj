@@ -7,8 +7,8 @@
    [clojure.java.io :as io]
    [clojure.set :as set]
    [clojure.string :as string]
-   [incanter.stats :as stats]
-   [com.rpl.specter :as s])
+   [com.rpl.specter :as s]
+   [incanter.stats :as stats])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
