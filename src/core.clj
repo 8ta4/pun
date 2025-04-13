@@ -84,6 +84,7 @@
 
 (defn create-request
   [phrase]
+; The custom_id must match the pattern '^[a-zA-Z0-9_-]{1,64}$'. Raw phrases might not.
   {:custom_id (generate-id phrase)
    :params {:model "claude-3-7-sonnet-20250219"
             :max_tokens 32
