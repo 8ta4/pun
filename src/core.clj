@@ -1,5 +1,7 @@
 (ns core
   (:require
+   [buddy.core.codecs :as codecs]
+   [buddy.core.hash :as hash]
    [cheshire.core :refer [parse-string]]
    [clj-http.client :as client]
    [clj-yaml.core :as yaml]
@@ -7,8 +9,8 @@
    [clojure.java.io :as io]
    [clojure.set :as set]
    [clojure.string :as string]
-   [incanter.stats :as stats]
-   [com.rpl.specter :as s])
+   [com.rpl.specter :as s]
+   [incanter.stats :as stats])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
@@ -77,9 +79,13 @@
   [phrase]
   (str "{\n\"" phrase "\""))
 
+(def generate-id
+  (comp codecs/bytes->hex hash/sha256))
+
 (defn create-request
   [phrase]
-  {:custom_id phrase
+; The custom_id must match the pattern '^[a-zA-Z0-9_-]{1,64}$'. Raw phrases might not.
+  {:custom_id (generate-id phrase)
    :params {:model "claude-3-7-sonnet-20250219"
             :max_tokens 32
             :temperature 0
@@ -140,18 +146,6 @@
        (map #(parse-string % keyword))
        (filter (comp (partial = "succeeded") :type :result))))
 
-(defn load-successful-phrases
-  []
-  (set (map :custom_id (load-results))))
-
-(defn load-vocabulary
-  []
-  (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
-
-(defn get-remaining-phrases
-  []
-  (set/difference (load-vocabulary) (load-successful-phrases)))
-
 (defn get-result-text
   [successful-result]
   (->> successful-result
@@ -186,6 +180,22 @@
   [x]
   (and (sequential? x) (empty? x)))
 
+(defn load-vocabulary
+  []
+  (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
+
+(defn get-id-phrase-map
+  []
+  (into {} (map (juxt generate-id identity) (load-vocabulary))))
+
+(defn load-successful-phrases
+  []
+  (set (map (comp (get-id-phrase-map) :custom_id) (load-results))))
+
+(defn get-remaining-phrases
+  []
+  (set/difference (load-vocabulary) (load-successful-phrases)))
+
 (defn send-batch
   []
   (->> (get-remaining-phrases)
@@ -193,24 +203,31 @@
        create-requests
        post-batch))
 
-(defn manage-workflow
+(defn poll-batches
   []
-  (when (empty-sequential? (fetch-batch-data))
-    (println "Sending initial batch...")
-    (send-batch))
-  (when (:results_url (first (fetch-batch-data)))
-    (println "Saving results and queueing next batch...")
-    (save-latest-batch-results)
-    (send-batch))
-  (Thread/sleep sleep-duration)
-  (recur))
+  (cond
+    (empty? (get-remaining-phrases)) nil
+    (empty-sequential? (fetch-batch-data)) (do (println "Sending initial batch...")
+                                               (send-batch)
+                                               (recur))
+    (:results_url (first (fetch-batch-data))) (do
+                                                (println "Saving results and queueing next batch...")
+                                                (save-latest-batch-results)
+                                                (send-batch)
+                                                (recur))))
 
 (defn load-and-parse-scores
   []
-  (->> raw-path
-       slurp
-       edn/read-string
-       (map (fn [[k v]] (edn/read-string (str (generate-prefill k) " " v))))))
+  (let [id-phrase-map (get-id-phrase-map)]
+    (->> raw-path
+         slurp
+         edn/read-string
+         (map (fn [[k v]]
+                (-> k
+                    id-phrase-map
+                    generate-prefill
+                    (str " " v)
+                    edn/read-string))))))
 
 (def benchmark-word
   "touchstone")
@@ -250,6 +267,7 @@
   [& args]
   (case (first args)
     "vocabulary" (save-vocabulary)
-    "raw" (manage-workflow)
+    "poll" (poll-batches)
+    "raw" (save-raw)
     "normalized" (save-normalized)
     (println "Invalid command.")))
