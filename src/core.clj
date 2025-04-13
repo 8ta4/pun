@@ -192,12 +192,33 @@
   []
   (set/difference (load-vocabulary) (load-successful-phrases)))
 
-(defn send-batch
+(defn latest-batch-incomplete?
+  []
+  (-> (fetch-batch-data)
+; Most recently created batches are returned first.
+; https://docs.anthropic.com/en/api/listing-message-batches
+      first
+; URL to a .jsonl file containing the results of the Message Batch requests. Specified only once processing ends.
+; https://docs.anthropic.com/en/api/listing-message-batches
+      :results_url
+      nil?))
+
+(defn await-batch
+  []
+  (while (latest-batch-incomplete?)
+    (Thread/sleep sleep-duration)))
+
+(defn wait-and-send-batch
+  [batch]
+  (await-batch)
+  (post-batch (create-requests batch)))
+
+(defn submit-remaining-phrases
   []
   (->> (get-remaining-phrases)
-       (take batch-size)
-       create-requests
-       post-batch))
+       (partition-all batch-size)
+       (map wait-and-send-batch)
+       dorun))
 
 (defn load-and-parse-scores
   []
