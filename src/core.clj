@@ -199,7 +199,7 @@
        create-requests
        post-batch))
 
-(defn manage-workflow
+(defn poll-batches
   []
   (when (empty-sequential? (fetch-batch-data))
     (println "Sending initial batch...")
@@ -256,6 +256,7 @@
   [& args]
   (case (first args)
     "vocabulary" (save-vocabulary)
-    "raw" (manage-workflow)
+    "poll" (poll-batches)
+    "raw" (save-raw)
     "normalized" (save-normalized)
     (println "Invalid command.")))
