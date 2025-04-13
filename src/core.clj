@@ -136,6 +136,7 @@
 
 (defn save-results
   []
+  (println "Saving results...")
   (dorun (map save-batch-results (fetch-batch-data))))
 
 (defn load-results
@@ -215,6 +216,7 @@
 
 (defn submit-batches
   []
+  (println "Submitting batches...")
   (->> (get-remaining-phrases)
        (partition-all batch-size)
        (map wait-and-send-batch)
