@@ -96,14 +96,6 @@
   [phrases]
   (map create-request phrases))
 
-(defn get-batch
-  "Retrieve a message batch"
-  [batch-id]
-  (client/get (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
-              {:headers {:x-api-key (get-anthropic-key)
-                         :anthropic-version anthropic-version}
-               :as :json}))
-
 (defn list-batches
   []
   (client/get "https://api.anthropic.com/v1/messages/batches"
