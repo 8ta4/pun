@@ -247,7 +247,8 @@
                        keys
                        set
                        (disj benchmark-word)
-                       first)
+                       first
+                       (or benchmark-word))
         target-score (get score-entry target-key)]
     {target-key (if (<= target-score benchmark-score)
                   (/ (* target-score mean-benchmark-score) benchmark-score)
