@@ -202,7 +202,7 @@ where:
 
 - $\bar{B}$: The mean score of the benchmark word across all runs.
 
-It is assumed that $B \neq 0$ and $B \neq 100$. If $B$ ever hits 0 or 100, that run gets tossed and re-done.
+It is assumed that $B \neq 0$ and $B \neq 100$. If $B$ ever hits 0 or 100, that run gets tossed.
 
 This piecewise approach ensures that scores of 0% and 100% remain unchanged, while scores near the benchmark are adjusted proportionally to the benchmark word's difference from its mean.
 
