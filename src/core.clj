@@ -96,14 +96,6 @@
   [phrases]
   (map create-request phrases))
 
-(defn get-batch
-  "Retrieve a message batch"
-  [batch-id]
-  (client/get (str "https://api.anthropic.com/v1/messages/batches/" batch-id)
-              {:headers {:x-api-key (get-anthropic-key)
-                         :anthropic-version anthropic-version}
-               :as :json}))
-
 (defn list-batches
   []
   (client/get "https://api.anthropic.com/v1/messages/batches"
@@ -126,16 +118,18 @@
 (def results-path
   (io/file cache-path "results"))
 
-(defn save-latest-batch-results
+(defn save-batch-results
+  [batch]
+  (->> batch
+       :results_url
+       get-batch-results
+       :body
+       (spit-make-parents (io/file results-path (str (:id batch) ".jsonl")))))
+
+(defn save-results
   []
-; "Most recently created batches are returned first."
-; https://docs.anthropic.com/en/api/listing-message-batches
-  (let [latest-batch (first (fetch-batch-data))]
-    (->> latest-batch
-         :results_url
-         get-batch-results
-         :body
-         (spit-make-parents (io/file results-path (str (:id latest-batch) ".jsonl"))))))
+  (println "Saving results...")
+  (dorun (map save-batch-results (fetch-batch-data))))
 
 (defn load-results
   []
@@ -173,11 +167,7 @@
   100000)
 
 (def sleep-duration
-  60000)
-
-(defn empty-sequential?
-  [x]
-  (and (sequential? x) (empty? x)))
+  10000)
 
 (defn load-vocabulary
   []
@@ -195,24 +185,40 @@
   []
   (set/difference (load-vocabulary) (load-successful-phrases)))
 
-(defn send-batch
+(defn latest-batch-incomplete?
   []
-  (->> (get-remaining-phrases)
-       (take batch-size)
-       create-requests
-       post-batch))
+  (-> (fetch-batch-data)
+; Most recently created batches are returned first.
+; https://docs.anthropic.com/en/api/listing-message-batches
+      first
+; URL to a .jsonl file containing the results of the Message Batch requests. Specified only once processing ends.
+; https://docs.anthropic.com/en/api/listing-message-batches
+      :results_url
+      nil?))
 
-(defn poll-batches
+(defn await-batch
   []
-  (println "Polling batches...")
-  (when (and (not (empty-sequential? (fetch-batch-data)))
-             (:results_url (first (fetch-batch-data))))
-    (save-latest-batch-results))
-  (when-not (empty? (get-remaining-phrases))
-    (println "Queueing next batch...")
-    (send-batch)
-    (Thread/sleep sleep-duration)
-    (recur)))
+  (while (latest-batch-incomplete?)
+    (Thread/sleep sleep-duration)))
+
+(defn empty-sequential?
+  [x]
+  (and (sequential? x) (empty? x)))
+
+(defn wait-and-send-batch
+  [batch]
+  (when-not (empty-sequential? (fetch-batch-data))
+    (await-batch))
+  (println "Sending batch...")
+  (post-batch (create-requests batch)))
+
+(defn submit-batches
+  []
+  (println "Submitting batches...")
+  (->> (get-remaining-phrases)
+       (partition-all batch-size)
+       (map wait-and-send-batch)
+       dorun))
 
 (defn load-and-parse-scores
   []
@@ -265,7 +271,8 @@
   [& args]
   (case (first args)
     "vocabulary" (save-vocabulary)
-    "poll" (poll-batches)
+    "batches" (submit-batches)
+    "results" (save-results)
     "raw" (save-raw)
     "normalized" (save-normalized)
     (println "Invalid command.")))
