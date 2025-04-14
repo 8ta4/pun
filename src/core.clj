@@ -201,9 +201,14 @@
   (while (latest-batch-incomplete?)
     (Thread/sleep sleep-duration)))
 
+(defn empty-sequential?
+  [x]
+  (and (sequential? x) (empty? x)))
+
 (defn wait-and-send-batch
   [batch]
-  (await-batch)
+  (when-not (empty-sequential? (fetch-batch-data))
+    (await-batch))
   (println "Sending batch...")
   (post-batch (create-requests batch)))
 
