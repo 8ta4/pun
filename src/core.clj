@@ -220,6 +220,11 @@
        (map wait-and-send-batch)
        dorun))
 
+(defn try-parse-edn
+  [s]
+  (try (edn/read-string s)
+       (catch RuntimeException _ nil)))
+
 (defn load-and-parse-scores
   []
   (let [id-phrase-map (get-id-phrase-map)]
@@ -231,7 +236,8 @@
                     id-phrase-map
                     generate-prefill
                     (str " " v)
-                    edn/read-string))))))
+                    try-parse-edn)))
+         (remove nil?))))
 
 (def benchmark-word
   "touchstone")
