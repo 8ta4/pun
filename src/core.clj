@@ -4,7 +4,6 @@
    [buddy.core.hash :as hash]
    [cheshire.core :refer [parse-string]]
    [clj-http.client :as client]
-   [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.set :as set]
@@ -51,15 +50,12 @@
        (string/join "\n")
        (spit-make-parents vocabulary-path)))
 
-(def config-path
-  (io/file (System/getProperty "user.home") ".config/pun/config.yaml"))
+(def key-path
+  (io/file (System/getProperty "user.home") ".config/pun/key"))
 
 (defn get-anthropic-key
   []
-  (-> config-path
-      slurp
-      yaml/parse-string
-      :key))
+  (slurp key-path))
 
 (def anthropic-version "2023-06-01")
 
