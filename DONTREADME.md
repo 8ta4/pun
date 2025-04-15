@@ -46,19 +46,7 @@ The target response time is one second when the background server is alive. "[10
 
 > What is the storage location for the API key?
 
-The API key storage location is `~/.config/pun/config.yaml`.
-
-> Why choose YAML over JSON for storing the API keys?
-
-YAML is better than JSON because it
-
-- allows you to add comments.
-
-- doesn't require extra commas.
-
-> Why the `.yaml` and not `.yml`?
-
-The YAML FAQ recommends "[using '.yaml' when possible.](https://yaml.org/faq.html#:~:text=Is%20there%20an,yaml%22%20when%20possible.)"
+The API key storage location is `~/.config/pun/key`.
 
 > Why not use the `Application Support` directory for the API keys?
 
