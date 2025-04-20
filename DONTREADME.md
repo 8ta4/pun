@@ -281,6 +281,8 @@ Nah. These scores are generated data, not source code.
 
 No way. The scoring process occasionally needs manual babysitting. API calls might fail, models might return garbage, or other random stuff can go wrong. Since it costs real money to run these LLM calls, I don't want to blindly retry in an automated pipeline. It's the kind of process I want to run manually, check the results, and then commit when I'm satisfied.
 
+So instead, the scores are committed to the separate `pun-data` Git repository.
+
 > Are the precomputed recognizability scores stored using Git LFS?
 
 No.
