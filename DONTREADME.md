@@ -355,6 +355,18 @@ Nope. Using dictionaries alone runs into these problems:
 
 Sure, I could try to bolt dictionaries onto a conversion library for better accuracy, but that's a job for the IPA conversion library itself, not `pun`.
 
+> Does `pun` convert English text to IPA on the fly?
+
+No way. Transcribing the entire vocabulary to IPA would take ages.
+
+> Is the precomputed IPA data stored in this repository?
+
+Nah. The IPA data is generated data, not source code for the `pun` tool itself.
+
+> Is the precomputed IPA data included in automated releases?
+
+Nope. The precomputed IPA data is stored in the separate `pun-data` Git repository alongside the recognizability scores for consistency.
+
 > Does `pun` treat diphthongs as single or double units in IPA representations when calculating Levenshtein distance?
 
 `pun` treats diphthongs as single units. This makes the Levenshtein distance easier to understand since all vowels get treated equally.
