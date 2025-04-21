@@ -9,10 +9,14 @@
    [clojure.set :as set]
    [clojure.string :as string]
    [com.rpl.specter :as s]
-   [incanter.stats :as stats])
+   [incanter.stats :as stats]
+   [libpython-clj2.python :refer [$a]]
+   [libpython-clj2.require :refer [require-python]])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
+
+(require-python 'epitran)
 
 (def cache-path
   (io/file (System/getProperty "user.home") ".cache/pun"))
@@ -269,6 +273,13 @@
          (map (partial normalize-score-entry (compute-mean scores)))
          (reduce merge)
          (spit-make-parents normalized-path))))
+
+(def model
+  (epitran/Epitran "eng-Latn"))
+
+(defn get-ipa
+  [s]
+  ($a model transliterate s))
 
 (defn -main
   [& args]

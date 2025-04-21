@@ -1,5 +1,6 @@
-{:deps {cheshire/cheshire {:mvn/version "5.13.0"}
+{:deps {buddy/buddy-core {:mvn/version "1.12.0-430"}
+        cheshire/cheshire {:mvn/version "5.13.0"}
         clj-http/clj-http {:mvn/version "3.13.0"}
+        clj-python/libpython-clj {:mvn/version "2.026"}
         com.rpl/specter {:mvn/version "1.1.4"}
-        incanter/incanter-core {:mvn/version "1.9.3"}
-        buddy/buddy-core {:mvn/version "1.12.0-430"}}}
+        incanter/incanter-core {:mvn/version "1.9.3"}}}
