@@ -281,6 +281,17 @@
   [s]
   ($a model transliterate s))
 
+(defn generate-ipa-map
+  []
+  (into {} (map (juxt identity get-ipa) (load-vocabulary))))
+
+(def ipa-path
+  (io/file cache-path "ipa.edn"))
+
+(defn save-ipa
+  []
+  (spit-make-parents ipa-path (generate-ipa-map)))
+
 (defn -main
   [& args]
   (case (first args)
@@ -289,4 +300,5 @@
     "results" (save-results)
     "raw" (save-raw)
     "normalized" (save-normalized)
+    "ipa" (save-ipa)
     (println "Invalid command.")))
