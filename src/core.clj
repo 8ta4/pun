@@ -300,4 +300,5 @@
     "results" (save-results)
     "raw" (save-raw)
     "normalized" (save-normalized)
+    "ipa" (save-ipa)
     (println "Invalid command.")))
