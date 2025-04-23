@@ -407,6 +407,14 @@ Yes. If one word is just the other plus "-ly" or vice-versa, that usually means 
 
 Yep. Swapping a word for another form sharing the exact same dictionary lemma almost never makes for a clever pun. So, `pun` checks if the potential replacement shares a lemma with the original word. If they match, that substitution gets filtered out.
 
+> What library does `pun` use for lemmatization?
+
+`pun` rolls with LemmInflect.
+
+LemmInflect's own benchmarks using the AGID dataset suggest it seems to nail the correct lemma more often compared to the other guys.
+
+Stanford's CoreNLP exhibits a tendency to spit the same word back instead of the actual lemma when given comparative adjectives.
+
 > Can `pun` generate multiple puns that differ only in the grammatical form of the substituted word?
 
 Yep! These aren't filtered out because:
