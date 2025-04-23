@@ -413,7 +413,7 @@ Yep. Swapping a word for another form sharing the exact same dictionary lemma al
 
 LemmInflect's own benchmarks using the AGID dataset suggest it seems to [nail the correct lemma more often](https://github.com/bjascob/LemmInflect/blob/b7699808106a4ce843fc7f0e8e5d87fcb84cc636/README.md?plain=1#L32-L47) compared to the other guys.
 
-Stanford's CoreNLP exhibits a tendency to spit the same word back instead of the actual lemma when given comparative adjectives.
+[CoreNLP](https://github.com/stanfordnlp/CoreNLP) exhibits a tendency to spit the same word back instead of the actual lemma when given comparative adjectives.
 
 > Can `pun` generate multiple puns that differ only in the grammatical form of the substituted word?
 
