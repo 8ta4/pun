@@ -42,3 +42,6 @@
                      (partial calculate-normalized-distance (get-ipa word))
                      last))
        (map first)))
+
+(def recognizable-multi-word-phrases
+  (filter has-space? recognizable-phrases))
