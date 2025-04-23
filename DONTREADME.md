@@ -331,7 +331,7 @@ Yep! `pun` can totally use homophones for substitution. But it's not limited to 
 
 `pun` uses normalized Levenshtein distance on International Phonetic Alphabet (IPA) representations. For substitution jokes to land, the audience has to recognize the original phrase being referenced. The tool converts words to their IPA representation and then calculates the Levenshtein distance between them to figure out how phonetically similar they are. This approach makes sure substitutions keep enough phonetic similarity to keep the puns identifiable.
 
-> Does `pun` use PanPhon's phonological distance to calculate phonetic similarity?
+> Does `pun` use [PanPhon](https://github.com/dmort27/panphon)'s phonological distance to calculate phonetic similarity?
 
 Nope. Here's why:
 
