@@ -8,3 +8,9 @@
 
 (def phrase-ipas
   (edn/read-string (slurp ipa-path)))
+
+(def has-space?
+  (partial re-find #" "))
+
+(def word-scores
+  (into {} (remove (comp has-space? first) phrase-scores)))
