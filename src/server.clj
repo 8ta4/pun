@@ -16,11 +16,11 @@
 (def has-space?
   (partial re-find #" "))
 
-(def word-scores
-  (into {} (remove (comp has-space? first) phrase-scores)))
-
 (def recognizability-threshold
   50)
 
 (def recognizable-words
-  (map first (filter (comp (partial < recognizability-threshold) second) word-scores)))
+  (->> phrase-scores
+       (remove (comp has-space? first))
+       (filter (comp (partial < recognizability-threshold) second))
+       (map first)))
