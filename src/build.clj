@@ -1,4 +1,4 @@
-(ns core
+(ns build
   (:require
    [buddy.core.codecs :as codecs]
    [buddy.core.hash :as hash]
