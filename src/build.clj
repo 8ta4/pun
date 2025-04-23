@@ -9,6 +9,7 @@
    [clojure.set :as set]
    [clojure.string :as string]
    [com.rpl.specter :as s]
+   [core :refer [cache-path]]
    [incanter.stats :as stats]
    [libpython-clj2.python :refer [$a]]
    [libpython-clj2.require :refer [require-python]])
@@ -17,9 +18,6 @@
    (java.util.zip GZIPInputStream)))
 
 (require-python 'epitran)
-
-(def cache-path
-  (io/file (System/getProperty "user.home") ".cache/pun"))
 
 (def wiktextract-data-path
   (io/file cache-path "raw-wiktextract-data.jsonl.gz"))
