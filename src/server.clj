@@ -1,7 +1,10 @@
 (ns server
   (:require
    [clojure.edn :as edn]
-   [core :refer [ipa-path normalized-path]]))
+   [core :refer [ipa-path normalized-path]]
+   [libpython-clj2.python :refer [from-import]]))
+
+(from-import Levenshtein distance)
 
 (def phrase-scores
   (edn/read-string (slurp normalized-path)))
