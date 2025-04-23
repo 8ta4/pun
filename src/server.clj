@@ -24,3 +24,7 @@
        (remove (comp has-space? first))
        (filter (comp (partial < recognizability-threshold) second))
        (map first)))
+
+(defn calculate-normalized-distance
+  [original replacement]
+  (/ (distance original replacement) (count original)))
