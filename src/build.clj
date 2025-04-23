@@ -9,7 +9,7 @@
    [clojure.set :as set]
    [clojure.string :as string]
    [com.rpl.specter :as s]
-   [core :refer [cache-path normalized-path ipa-path]]
+   [core :refer [cache-path normalized-path ipa-path get-ipa]]
    [incanter.stats :as stats]
    [libpython-clj2.python :refer [$a]]
    [libpython-clj2.require :refer [require-python]])
@@ -268,13 +268,6 @@
          (map (partial normalize-score-entry (compute-mean scores)))
          (reduce merge)
          (spit-make-parents normalized-path))))
-
-(def model
-  (epitran/Epitran "eng-Latn"))
-
-(defn get-ipa
-  [s]
-  ($a model transliterate s))
 
 (defn generate-ipa-map
   []

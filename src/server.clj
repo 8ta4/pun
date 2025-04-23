@@ -1,8 +1,9 @@
 (ns server
   (:require
    [clojure.edn :as edn]
-   [core :refer [ipa-path normalized-path]]
-   [libpython-clj2.python :refer [from-import]]))
+   [core :refer [get-ipa ipa-path normalized-path]]
+   [libpython-clj2.python :refer [from-import]]
+   [libpython-clj2.require]))
 
 (from-import Levenshtein distance)
 
@@ -15,5 +16,32 @@
 (def has-space?
   (partial re-find #" "))
 
-(def word-scores
-  (into {} (remove (comp has-space? first) phrase-scores)))
+(def recognizability-threshold
+  50)
+
+(def recognizable-phrases
+  (->> phrase-scores
+       (filter (comp (partial < recognizability-threshold) second))
+       (map first)))
+
+(def recognizable-words
+  (remove has-space? recognizable-phrases))
+
+(defn calculate-normalized-distance
+  [original replacement]
+  (/ (distance original replacement) (count original)))
+
+(def similarity-threshold
+  0.5)
+
+(defn find-similar-words
+  [word]
+  (->> recognizable-words
+       (select-keys phrase-ipas)
+       (filter (comp (partial > similarity-threshold)
+                     (partial calculate-normalized-distance (get-ipa word))
+                     last))
+       (map first)))
+
+(def recognizable-multi-word-phrases
+  (filter has-space? recognizable-phrases))
