@@ -2,7 +2,8 @@
   (:require
    [clojure.edn :as edn]
    [core :refer [ipa-path normalized-path]]
-   [libpython-clj2.python :refer [from-import]]))
+   [libpython-clj2.python :refer [from-import]]
+   [libpython-clj2.require]))
 
 (from-import Levenshtein distance)
 
