@@ -1,7 +1,7 @@
 (ns server
   (:require
    [clojure.edn :as edn]
-   [core :refer [ipa-path normalized-path]]
+   [core :refer [get-ipa ipa-path normalized-path]]
    [libpython-clj2.python :refer [from-import]]
    [libpython-clj2.require]))
 
@@ -28,3 +28,13 @@
 (defn calculate-normalized-distance
   [original replacement]
   (/ (distance original replacement) (count original)))
+
+(def similarity-threshold
+  0.5)
+
+(defn find-similar-words
+  [word]
+  (map first (filter (comp (partial > similarity-threshold)
+                           (partial calculate-normalized-distance (get-ipa word))
+                           last)
+                     (select-keys phrase-ipas recognizable-words))))
