@@ -9,7 +9,7 @@
    [clojure.set :as set]
    [clojure.string :as string]
    [com.rpl.specter :as s]
-   [core :refer [cache-path]]
+   [core :refer [cache-path normalized-path ipa-path]]
    [incanter.stats :as stats]
    [libpython-clj2.python :refer [$a]]
    [libpython-clj2.require :refer [require-python]])
@@ -260,9 +260,6 @@
                      (/ (* (- 100.0 target-score) (- 100.0 mean-benchmark-score))
                         (- 100.0 benchmark-score))))}))
 
-(def normalized-path
-  (io/file cache-path "normalized.edn"))
-
 (defn save-normalized
   []
   (println "Starting normalization process...")
@@ -282,9 +279,6 @@
 (defn generate-ipa-map
   []
   (into {} (map (juxt identity get-ipa) (load-vocabulary))))
-
-(def ipa-path
-  (io/file cache-path "ipa.edn"))
 
 (defn save-ipa
   []
