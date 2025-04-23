@@ -19,11 +19,13 @@
 (def recognizability-threshold
   50)
 
-(def recognizable-words
+(def recognizable-phrases
   (->> phrase-scores
-       (remove (comp has-space? first))
        (filter (comp (partial < recognizability-threshold) second))
        (map first)))
+
+(def recognizable-words
+  (remove has-space? recognizable-phrases))
 
 (defn calculate-normalized-distance
   [original replacement]
