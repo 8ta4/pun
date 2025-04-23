@@ -303,7 +303,7 @@ No way. Reproducibility is not guaranteed for the following reasons:
 
 1.  Run `./download.sh` in your terminal to grab the Wiktionary data you need.
 
-1.  Run `clj -M -m core vocabulary` to chew through the data and spit out the `vocabulary.txt` file.
+1.  Run `clj -M -m build vocabulary` to chew through the data and spit out the `vocabulary.txt` file.
 
 1.  Copy your Anthropic API key string from their website to your clipboard.
 
@@ -311,15 +311,15 @@ No way. Reproducibility is not guaranteed for the following reasons:
 
 1.  Make sure your Anthropic account has credits.
 
-1.  Run `clj -M -m core batches` to send off the scoring requests to the Anthropic Batch API.
+1.  Run `clj -M -m build batches` to send off the scoring requests to the Anthropic Batch API.
 
-1.  Run `clj -M -m core results` to download the result files for completed batches from the API.
+1.  Run `clj -M -m build results` to download the result files for completed batches from the API.
 
-1.  Run `clj -M -m core raw` to gather up scores from the downloaded result files.
+1.  Run `clj -M -m build raw` to gather up scores from the downloaded result files.
 
-1.  Run `clj -M -m core normalized` to parse the scores, normalize them using the benchmark, and save the final scores to `~/.cache/pun/normalized.edn`.
+1.  Run `clj -M -m build normalized` to parse the scores, normalize them using the benchmark, and save the final scores to `~/.cache/pun/normalized.edn`.
 
-The `batches` command eats API credits. If your account runs goes negative, requests within the submitted batches might start failing. To get back on track, first run `clj -M -m core results` to save progress by downloading results. Then, top up your Anthropic account credits. After that, just run `clj -M -m core batches`; it will automatically identify remaining phrases and submit new batches only for those. it's smart enough to figure out what's left and only sends requests for those. Once that `batches` run finishes cleanly, proceed with the subsequent steps.
+The `batches` command eats API credits. If your account runs goes negative, requests within the submitted batches might start failing. To get back on track, first run `clj -M -m build results` to save progress by downloading results. Then, top up your Anthropic account credits. After that, just run `clj -M -m build batches`; it will automatically identify remaining phrases and submit new batches only for those. it's smart enough to figure out what's left and only sends requests for those. Once that `batches` run finishes cleanly, proceed with the subsequent steps.
 
 ## Phonetic Similarity Analysis
 
