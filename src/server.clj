@@ -34,7 +34,9 @@
 
 (defn find-similar-words
   [word]
-  (map first (filter (comp (partial > similarity-threshold)
-                           (partial calculate-normalized-distance (get-ipa word))
-                           last)
-                     (select-keys phrase-ipas recognizable-words))))
+  (->> recognizable-words
+       (select-keys phrase-ipas)
+       (filter (comp (partial > similarity-threshold)
+                     (partial calculate-normalized-distance (get-ipa word))
+                     last))
+       (map first)))
