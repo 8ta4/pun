@@ -1,9 +1,12 @@
 (ns server
   (:require
    [clojure.edn :as edn]
+   [clojure.math.combinatorics :refer [cartesian-product]]
+   [clojure.string :as string]
    [core :refer [get-ipa ipa-path normalized-path]]
    [libpython-clj2.python :refer [from-import]]
-   [libpython-clj2.require]))
+   [libpython-clj2.require]
+   [clojure.set :as set]))
 
 (from-import Levenshtein distance)
 
@@ -43,3 +46,15 @@
 
 (def recognizable-multi-word-phrases
   (filter has-space? recognizable-phrases))
+
+(defn create-boundary-regex
+  [word]
+  (re-pattern (str "\\b" word "\\b")))
+
+(defn generate-puns
+  [substitute-word]
+  (mapcat (fn [[original-word phrase]]
+            (if (re-find (create-boundary-regex original-word) phrase)
+              [(string/replace phrase (create-boundary-regex original-word) substitute-word)]
+              []))
+          (cartesian-product (find-similar-words substitute-word) recognizable-multi-word-phrases)))
