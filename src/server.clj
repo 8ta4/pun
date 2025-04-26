@@ -57,4 +57,10 @@
             (if (re-find (create-boundary-regex original-word) phrase)
               [(string/replace phrase (create-boundary-regex original-word) substitute-word)]
               []))
-          (cartesian-product (find-similar-words substitute-word) recognizable-multi-word-phrases)))
+          (let [similar-words (find-similar-words substitute-word)]
+            (cartesian-product similar-words
+                               (remove (comp empty?
+                                             (partial set/intersection (set similar-words))
+                                             set
+                                             #(string/split % #" "))
+                                       recognizable-multi-word-phrases)))))
