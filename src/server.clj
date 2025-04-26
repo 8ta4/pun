@@ -20,9 +20,7 @@
   50)
 
 (def recognizable-phrases
-  (->> phrase-scores
-       (filter (comp (partial < recognizability-threshold) second))
-       (map first)))
+  (map first (filter (comp (partial < recognizability-threshold) second) phrase-scores)))
 
 (def recognizable-words
   (remove has-space? recognizable-phrases))
