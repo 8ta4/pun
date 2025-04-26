@@ -64,6 +64,8 @@
                        #(string/split % #" ")))
          (cartesian-product similar-words)
          (mapcat (fn [[original-word phrase]]
-                   (if (re-find (create-boundary-regex original-word) phrase)
+                   (if (and (re-find (create-boundary-regex original-word) phrase)
+                            (not= original-word substitute-word))
                      [(string/replace phrase (create-boundary-regex original-word) substitute-word)]
-                     []))))))
+                     [])))
+         distinct)))
