@@ -53,17 +53,19 @@
 
 (defn generate-puns
   [substitute-word]
-  (mapcat (fn [[original-word phrase]]
-            (if (re-find (create-boundary-regex original-word) phrase)
-              [(string/replace phrase (create-boundary-regex original-word) substitute-word)]
-              []))
-          (let [similar-words (find-similar-words substitute-word)]
-            (cartesian-product similar-words
+  (let [similar-words (find-similar-words substitute-word)]
+    (->> recognizable-multi-word-phrases
 ; Efficiently generates puns by filtering phrases prior to the cartesian product.
 ; This drastically reduces intermediate computations and allocations.
 ; Observed ~5558ms -> ~916ms elapsed time for `(time (doall (generate-puns "pun")))`
-                               (remove (comp empty?
-                                             (partial set/intersection (set similar-words))
-                                             set
-                                             #(string/split % #" "))
-                                       recognizable-multi-word-phrases)))))
+         (remove (comp empty?
+                       (partial set/intersection (set similar-words))
+                       set
+                       #(string/split % #" ")))
+         (cartesian-product similar-words)
+         (mapcat (fn [[original-word phrase]]
+                   (if (and (re-find (create-boundary-regex original-word) phrase)
+                            (not= original-word substitute-word))
+                     [(string/replace phrase (create-boundary-regex original-word) substitute-word)]
+                     [])))
+         distinct)))
