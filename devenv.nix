@@ -71,7 +71,7 @@
     # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870
     trailing-whitespace = {
       enable = true;
-      # https://github.com/pre-commit/pre-commit-hooks/blob/6db05e22aa7546f11ebde806dbf6fbf5985de07c/.pre-commit-hooks.yaml#L205-L212
+      # https://github.com/pre-commit/pre-commit-hooks/blob/5c514f85cc9be49324a6e3664e891ac2fc8a8609/.pre-commit-hooks.yaml#L205-L212
       entry = "${pkgs.python3Packages.pre-commit-hooks}/bin/trailing-whitespace-fixer";
       types = [ "text" ];
     };
