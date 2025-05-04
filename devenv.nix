@@ -67,8 +67,8 @@
     # https://github.com/NixOS/nixfmt/blob/1acdae8b49c1c5d7f22fed7398d7f6f3dbce4c8a/README.md?plain=1#L16
     nixfmt-rfc-style.enable = true;
     prettier.enable = true;
-    # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870
     shellcheck.enable = true;
+    # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870
     trailing-whitespace = {
       enable = true;
       # https://github.com/pre-commit/pre-commit-hooks/blob/6db05e22aa7546f11ebde806dbf6fbf5985de07c/.pre-commit-hooks.yaml#L205-L212
