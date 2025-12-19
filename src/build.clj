@@ -9,14 +9,17 @@
    [clojure.set :refer [difference]]
    [clojure.string :as string :refer [join split-lines]]
    [com.rpl.specter :refer [ALL select*]]
-   [core :refer [cache-path get-ipa ipa-path normalized-path]]
+   [core :refer [get-ipa]]
    [incanter.stats :refer [mean]])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
 
+(def data-path
+  "resources")
+
 (def wiktextract-data-path
-  (file cache-path "raw-wiktextract-data.jsonl.gz"))
+  (file data-path "raw-wiktextract-data.jsonl.gz"))
 
 (defn load-wiktextract
   []
@@ -31,7 +34,7 @@
        (map :word)))
 
 (def vocabulary-path
-  (file cache-path "vocabulary.txt"))
+  (file data-path "vocabulary.txt"))
 
 (defn spit-make-parents
   "Like clojure.core/spit, but creates parent directories."
@@ -110,7 +113,7 @@
                          :anthropic-version anthropic-version}}))
 
 (def results-path
-  (file cache-path "results"))
+  (file data-path "results"))
 
 (defn save-batch-results
   [batch]
@@ -147,7 +150,7 @@
   {(:custom_id successful-result) (get-result-text successful-result)})
 
 (def raw-path
-  (file cache-path "raw.edn"))
+  (file data-path "raw.edn"))
 
 (defn save-raw
   []
@@ -256,6 +259,9 @@
                      (/ (* (- 100.0 target-score) (- 100.0 mean-benchmark-score))
                         (- 100.0 benchmark-score))))}))
 
+(def normalized-path
+  (file data-path "normalized.edn"))
+
 (defn save-normalized
   []
   (println "Starting normalization process...")
@@ -264,6 +270,9 @@
          (map (partial normalize-score-entry (compute-mean scores)))
          (reduce merge)
          (spit-make-parents normalized-path))))
+
+(def ipa-path
+  (file data-path "ipa.edn"))
 
 (defn generate-ipa-map
   []
