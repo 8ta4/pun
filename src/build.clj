@@ -1,17 +1,16 @@
 (ns build
   (:require
-   [buddy.core.codecs :as codecs]
-   [buddy.core.hash :as hash]
+   [buddy.core.codecs :refer [bytes->hex]]
+   [buddy.core.hash :refer [sha256]]
    [cheshire.core :refer [parse-string]]
-   [clj-http.client :as client]
+   [clj-http.client :refer [post]]
    [clojure.edn :as edn]
-   [clojure.java.io :as io]
-   [clojure.set :as set]
-   [clojure.string :as string]
-   [com.rpl.specter :as s]
-   [core :refer [cache-path normalized-path ipa-path get-ipa]]
-   [incanter.stats :as stats]
-   [libpython-clj2.python :refer [$a]]
+   [clojure.java.io :refer [file input-stream make-parents]]
+   [clojure.set :refer [difference]]
+   [clojure.string :as string :refer [join split-lines]]
+   [com.rpl.specter :refer [ALL select*]]
+   [core :refer [cache-path get-ipa ipa-path normalized-path]]
+   [incanter.stats :refer [mean]]
    [libpython-clj2.require :refer [require-python]])
   (:import
    (java.io BufferedReader InputStreamReader)
@@ -20,12 +19,12 @@
 (require-python 'epitran)
 
 (def wiktextract-data-path
-  (io/file cache-path "raw-wiktextract-data.jsonl.gz"))
+  (file cache-path "raw-wiktextract-data.jsonl.gz"))
 
 (defn load-wiktextract
   []
   (->> wiktextract-data-path
-       io/input-stream
+       input-stream
        GZIPInputStream.
        InputStreamReader.
        BufferedReader.
@@ -35,12 +34,12 @@
        (map :word)))
 
 (def vocabulary-path
-  (io/file cache-path "vocabulary.txt"))
+  (file cache-path "vocabulary.txt"))
 
 (defn spit-make-parents
   "Like clojure.core/spit, but creates parent directories."
   [f content & options]
-  (io/make-parents f)
+  (make-parents f)
   (apply spit f content options))
 
 (defn save-vocabulary
@@ -49,11 +48,11 @@
   (->> (load-wiktextract)
        distinct
        sort
-       (string/join "\n")
+       (join "\n")
        (spit-make-parents vocabulary-path)))
 
 (def key-path
-  (io/file (System/getProperty "user.home") ".config/pun/key"))
+  (file (System/getProperty "user.home") ".config/pun/key"))
 
 (defn get-anthropic-key
   []
@@ -63,12 +62,12 @@
 
 (defn post-batch
   [requests]
-  (client/post "https://api.anthropic.com/v1/messages/batches"
-               {:headers {:x-api-key (get-anthropic-key)
-                          :anthropic-version anthropic-version
-                          :content-type "application/json"}
-                :body (cheshire.core/generate-string {:requests requests})
-                :as :json}))
+  (post "https://api.anthropic.com/v1/messages/batches"
+        {:headers {:x-api-key (get-anthropic-key)
+                   :anthropic-version anthropic-version
+                   :content-type "application/json"}
+         :body (cheshire.core/generate-string {:requests requests})
+         :as :json}))
 
 (def system
   (slurp "system.txt"))
@@ -77,7 +76,7 @@
   (comp (partial str "{\n") pr-str))
 
 (def generate-id
-  (comp codecs/bytes->hex hash/sha256))
+  (comp bytes->hex sha256))
 
 (defn create-request
   [phrase]
@@ -114,7 +113,7 @@
                          :anthropic-version anthropic-version}}))
 
 (def results-path
-  (io/file cache-path "results"))
+  (file cache-path "results"))
 
 (defn save-batch-results
   [batch]
@@ -122,7 +121,7 @@
        :results_url
        get-batch-results
        :body
-       (spit-make-parents (io/file results-path (str (:id batch) ".jsonl")))))
+       (spit-make-parents (file results-path (str (:id batch) ".jsonl")))))
 
 (defn save-results
   []
@@ -133,7 +132,7 @@
   []
   (->> results-path
        .listFiles
-       (mapcat (comp string/split-lines slurp))
+       (mapcat (comp split-lines slurp))
        (map #(parse-string % keyword))
        (filter (comp (partial = "succeeded") :type :result))))
 
@@ -151,7 +150,7 @@
   {(:custom_id successful-result) (get-result-text successful-result)})
 
 (def raw-path
-  (io/file cache-path "raw.edn"))
+  (file cache-path "raw.edn"))
 
 (defn save-raw
   []
@@ -169,7 +168,7 @@
 
 (defn load-vocabulary
   []
-  (into (sorted-set) (string/split-lines (slurp vocabulary-path))))
+  (into (sorted-set) (split-lines (slurp vocabulary-path))))
 
 (defn get-id-phrase-map
   []
@@ -181,7 +180,7 @@
 
 (defn get-remaining-phrases
   []
-  (set/difference (load-vocabulary) (load-successful-phrases)))
+  (difference (load-vocabulary) (load-successful-phrases)))
 
 (defn latest-batch-incomplete?
   []
@@ -241,8 +240,8 @@
   "touchstone")
 
 (def compute-mean
-  (comp (partial stats/mean)
-        (partial s/select* [s/ALL benchmark-word])))
+  (comp (partial mean)
+        (partial select* [ALL benchmark-word])))
 
 (defn normalize-score-entry
   [mean-benchmark-score score-entry]

@@ -2,11 +2,11 @@
   (:require
    [clojure.edn :as edn]
    [clojure.math.combinatorics :refer [cartesian-product]]
-   [clojure.string :as string]
+   [clojure.set :refer [intersection]]
+   [clojure.string :as string :refer [split]]
    [core :refer [get-ipa ipa-path normalized-path]]
    [libpython-clj2.python :refer [from-import]]
-   [libpython-clj2.require]
-   [clojure.set :as set]))
+   [libpython-clj2.require]))
 
 (from-import Levenshtein distance)
 
@@ -59,9 +59,9 @@
 ; This drastically reduces intermediate computations and allocations.
 ; Observed ~5558ms -> ~916ms elapsed time for `(time (doall (generate-puns "pun")))`
          (remove (comp empty?
-                       (partial set/intersection (set similar-words))
+                       (partial intersection (set similar-words))
                        set
-                       #(string/split % #" ")))
+                       #(split % #" ")))
          (cartesian-product similar-words)
          (mapcat (fn [[original-word phrase]]
                    (if (and (re-find (create-boundary-regex original-word) phrase)
