@@ -1,16 +1,10 @@
-[tool.poetry]
+[project]
 name = "pun"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Add your description here"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-epitran = "^1.26.0"
-levenshtein = "^0.27.1"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+dependencies = [
+    "epitran>=1.34.0",
+    "levenshtein>=0.27.3",
+]
