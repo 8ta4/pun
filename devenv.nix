@@ -22,8 +22,8 @@
   languages.clojure.enable = true;
   languages.python = {
     enable = true;
-    poetry.enable = true;
-    poetry.activate.enable = true;
+    uv.enable = true;
+    uv.sync.enable = true;
   };
 
   # https://devenv.sh/processes/
@@ -40,6 +40,8 @@
   enterShell = ''
     hello
     git --version
+    # https://github.com/astral-sh/uv/blob/e006a69fe83808d5eaebaa27f535914cf1b36105/docs/guides/projects.md?plain=1#L231
+    source .venv/bin/activate
   '';
 
   # https://devenv.sh/tasks/
