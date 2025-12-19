@@ -10,13 +10,10 @@
    [clojure.string :as string :refer [join split-lines]]
    [com.rpl.specter :refer [ALL select*]]
    [core :refer [cache-path get-ipa ipa-path normalized-path]]
-   [incanter.stats :refer [mean]]
-   [libpython-clj2.require :refer [require-python]])
+   [incanter.stats :refer [mean]])
   (:import
    (java.io BufferedReader InputStreamReader)
    (java.util.zip GZIPInputStream)))
-
-(require-python 'epitran)
 
 (def wiktextract-data-path
   (file cache-path "raw-wiktextract-data.jsonl.gz"))
