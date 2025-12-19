@@ -27,7 +27,7 @@ pom.xml.asc
 .cpcache/
 
 ### clj-kondo
-.clj-kondo
+.clj-kondo/.cache
 
 ### Language Server Protocol
 .lsp/.cache
