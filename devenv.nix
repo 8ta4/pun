@@ -74,6 +74,7 @@
     };
     # https://github.com/NixOS/nixfmt/blob/1acdae8b49c1c5d7f22fed7398d7f6f3dbce4c8a/README.md?plain=1#L16
     nixfmt-rfc-style.enable = true;
+    ormolu.enable = true;
     prettier.enable = true;
     shellcheck.enable = true;
     # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870
