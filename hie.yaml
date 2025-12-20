@@ -1,0 +1,3 @@
+cradle:
+  stack:
+    stackYaml: "hs/stack.yaml"

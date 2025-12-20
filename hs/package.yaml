@@ -58,9 +58,6 @@ ghc-options:
   - -Wno-partial-fields
   - -Wno-missing-role-annotations
 
-library:
-  source-dirs: src
-
 # https://github.com/purescript/purescript/blob/8ac0fb2962a7df318a74216872465dc2868c6064/purescript.cabal#L91-L121
 default-extensions:
   - BangPatterns
@@ -102,8 +99,6 @@ executables:
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
-    dependencies:
-      - hs
 
 tests:
   hs-test:
@@ -113,5 +108,3 @@ tests:
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
-    dependencies:
-      - hs
