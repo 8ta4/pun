@@ -3,7 +3,7 @@
    [buddy.core.codecs :refer [bytes->hex]]
    [buddy.core.hash :refer [sha256]]
    [cheshire.core :refer [parse-string]]
-   [clj-http.client :refer [post]]
+   [clj-http.client :as client :refer [post]]
    [clojure.edn :as edn]
    [clojure.java.io :refer [file input-stream make-parents]]
    [clojure.set :refer [difference]]
