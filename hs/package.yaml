@@ -23,6 +23,10 @@ dependencies:
   - base >= 4.7 && < 5
 
 ghc-options:
+  # https://github.com/commercialhaskell/stack-templates/blob/6c4ca807086556e2b12dfa4917195849e3321d26/new-template.hsfiles#L45-L47
+  - -threaded
+  - -rtsopts
+  - -with-rtsopts=-N
   # https://github.com/purescript/purescript/blob/8ac0fb2962a7df318a74216872465dc2868c6064/purescript.cabal#L57-L89
   # -- This list taken from https://medium.com/mercury-bank/enable-all-the-warnings-a0517bc081c3
   # -- Enable all warnings with -Weverything, then disable the ones we don’t care about
@@ -95,10 +99,6 @@ executables:
   hs-exe:
     main: Main.hs
     source-dirs: app
-    ghc-options:
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
 
 tests:
   hs-test:
