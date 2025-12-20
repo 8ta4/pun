@@ -46,6 +46,14 @@
   scripts.pun.exec = ''
     cd "$DEVENV_ROOT/hs" && stack run -- pun "$@"
   '';
+  scripts.watch.exec = ''
+    cd "$DEVENV_ROOT/hs" && ghcid -a \
+    --no-height-limit \
+    -r \
+    -s ":set args $@" \
+    -s ':set -Wprepositive-qualified-module' \
+    -W
+  '';
 
   enterShell = ''
     hello
