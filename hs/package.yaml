@@ -21,6 +21,7 @@ description: Please see the README on GitHub at <https://github.com/githubuser/h
 
 dependencies:
   - base >= 4.7 && < 5
+  - relude
 
 ghc-options:
   # https://github.com/commercialhaskell/stack-templates/blob/6c4ca807086556e2b12dfa4917195849e3321d26/new-template.hsfiles#L45-L47
