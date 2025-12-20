@@ -33,6 +33,8 @@
   # services.postgres.enable = true;
 
   # https://devenv.sh/scripts/
+  scripts.download-wiktionary.exec = scripts/download-wiktionary.sh;
+  scripts.download-pun.exec = scripts/download-pun.sh;
   scripts.hello.exec = ''
     echo hello from $GREET
   '';
