@@ -42,6 +42,9 @@
   scripts.hello.exec = ''
     echo hello from $GREET
   '';
+  scripts.pun.exec = ''
+    cd "$DEVENV_ROOT/hs" && stack run -- pun "$@"
+  '';
 
   enterShell = ''
     hello
