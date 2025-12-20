@@ -9,7 +9,7 @@
    [clojure.set :refer [difference]]
    [clojure.string :as string :refer [join split-lines]]
    [com.rpl.specter :refer [ALL select*]]
-   [core :refer [get-ipa]]
+   [core :refer [ipa-edn normalized-edn get-ipa]]
    [incanter.stats :refer [mean]])
   (:import
    (java.io BufferedReader InputStreamReader)
@@ -260,7 +260,7 @@
                         (- 100.0 benchmark-score))))}))
 
 (def normalized-path
-  (file data-path "normalized.edn"))
+  (file data-path normalized-edn))
 
 (defn save-normalized
   []
@@ -272,7 +272,7 @@
          (spit-make-parents normalized-path))))
 
 (def ipa-path
-  (file data-path "ipa.edn"))
+  (file data-path ipa-edn))
 
 (defn generate-ipa-map
   []

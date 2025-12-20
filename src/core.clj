@@ -5,6 +5,12 @@
 
 (require-python 'epitran)
 
+(def normalized-edn
+  "normalized.edn")
+
+(def ipa-edn
+  "ipa.edn")
+
 (def model
   (epitran/Epitran "eng-Latn"))
 
