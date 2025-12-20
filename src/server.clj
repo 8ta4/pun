@@ -88,3 +88,8 @@
   :start (run-jetty app {:join? false
                          :port 3000})
   :stop (.stop server))
+
+(defn -main
+  [& args]
+  (start)
+  @(promise))
