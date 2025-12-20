@@ -7,7 +7,11 @@
    [clojure.string :as string :refer [split]]
    [core :refer [get-ipa normalized-edn ipa-edn]]
    [libpython-clj2.python :refer [from-import]]
-   [libpython-clj2.require]))
+   [libpython-clj2.require]
+   [mount.core :refer [defstate start]]
+   [ring.adapter.jetty :refer [run-jetty]]
+   [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+   [ring.util.response :refer [response]]))
 
 (from-import Levenshtein distance)
 
@@ -70,3 +74,17 @@
                      [(string/replace phrase (create-boundary-regex original-word) substitute-word)]
                      [])))
          distinct)))
+
+(def handler
+  (comp response
+        set
+        (partial mapcat generate-puns)
+        :body))
+
+(def app
+  (wrap-json-response (wrap-json-body handler)))
+
+(defstate server
+  :start (run-jetty app {:join? false
+                         :port 3000})
+  :stop (.stop server))

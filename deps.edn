@@ -4,5 +4,8 @@
         clj-python/libpython-clj {:mvn/version "2.026"}
         com.rpl/specter {:mvn/version "1.1.4"}
         incanter/incanter-core {:mvn/version "1.9.3"}
-        org.clojure/math.combinatorics {:mvn/version "0.3.0"}}
+        mount/mount {:mvn/version "0.1.23"}
+        org.clojure/math.combinatorics {:mvn/version "0.3.0"}
+        ring/ring {:mvn/version "1.15.3"}
+        ring/ring-json {:mvn/version "0.5.1"}}
  :paths ["resources" "src"]}
