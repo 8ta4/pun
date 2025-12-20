@@ -1,0 +1,111 @@
+name: hs
+version: 0.1.0.0
+github: "githubuser/hs"
+license: BSD-3-Clause
+author: "Author name here"
+maintainer: "example@example.com"
+copyright: "2025 Author name here"
+
+extra-source-files:
+  - README.md
+  - CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/githubuser/hs#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+  - relude
+
+ghc-options:
+  # https://github.com/commercialhaskell/stack-templates/blob/6c4ca807086556e2b12dfa4917195849e3321d26/new-template.hsfiles#L45-L47
+  - -threaded
+  - -rtsopts
+  - -with-rtsopts=-N
+  # https://github.com/purescript/purescript/blob/8ac0fb2962a7df318a74216872465dc2868c6064/purescript.cabal#L57-L89
+  # -- This list taken from https://medium.com/mercury-bank/enable-all-the-warnings-a0517bc081c3
+  # -- Enable all warnings with -Weverything, then disable the ones we don’t care about
+  - -Weverything
+
+  # -- missing-exported-signatures turns off the more strict -Wmissing-signatures. See https://ghc.haskell.org/trac/ghc/ticket/14794#ticket
+  - -Wno-missing-exported-signatures
+
+  # -- Requires explicit imports of _every_ function (e.g. ‘$’); too strict
+  - -Wno-missing-import-lists
+
+  # -- When GHC can’t specialize a polymorphic function. No big deal and requires fixing underlying libraries to solve.
+  - -Wno-missed-specialisations
+  - -Wno-all-missed-specialisations
+
+  # -- Don’t use Safe Haskell warnings
+  - -Wno-unsafe
+  - -Wno-safe
+  - -Wno-trustworthy-safe
+  - -Wno-inferred-safe-imports
+  - -Wno-missing-safe-haskell-mode
+
+  # -- Warning for polymorphic local bindings; nothing wrong with those.
+  - -Wno-missing-local-signatures
+
+  # -- Don’t warn if the monomorphism restriction is used
+  - -Wno-monomorphism-restriction
+
+  # -- Remaining options don't come from the above blog post
+  - -Wno-missing-deriving-strategies
+  - -Wno-missing-export-lists
+  - -Wno-missing-kind-signatures
+  - -Wno-partial-fields
+  - -Wno-missing-role-annotations
+
+# https://github.com/purescript/purescript/blob/8ac0fb2962a7df318a74216872465dc2868c6064/purescript.cabal#L91-L121
+default-extensions:
+  - BangPatterns
+  - ConstraintKinds
+  - DataKinds
+  - DefaultSignatures
+  - DeriveFunctor
+  - DeriveFoldable
+  - DeriveTraversable
+  - DeriveGeneric
+  - DerivingStrategies
+  - DerivingVia
+  - EmptyDataDecls
+  - FlexibleContexts
+  - FlexibleInstances
+  - GeneralizedNewtypeDeriving
+  - ImportQualifiedPost
+  - KindSignatures
+  - LambdaCase
+  - MultiParamTypeClasses
+  - NamedFieldPuns
+  - NoImplicitPrelude
+  - PatternGuards
+  - PatternSynonyms
+  - RankNTypes
+  - RecordWildCards
+  - OverloadedRecordDot
+  - OverloadedStrings
+  - ScopedTypeVariables
+  - TupleSections
+  - TypeFamilies
+  - ViewPatterns
+
+executables:
+  pun:
+    main: Main.hs
+    source-dirs: app
+
+tests:
+  test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N

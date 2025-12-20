@@ -12,6 +12,7 @@
 
   # https://devenv.sh/packages/
   packages = [
+    pkgs.ghcid
     pkgs.git
     pkgs.gitleaks
     pkgs.wget
@@ -20,6 +21,10 @@
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
   languages.clojure.enable = true;
+  languages.haskell = {
+    enable = true;
+    stack.enable = true;
+  };
   languages.python = {
     enable = true;
     uv.enable = true;
@@ -37,6 +42,20 @@
   scripts.download-pun.exec = scripts/download-pun.sh;
   scripts.hello.exec = ''
     echo hello from $GREET
+  '';
+  scripts.install.exec = ''
+    cd "$DEVENV_ROOT/hs" && stack install
+  '';
+  scripts.pun.exec = ''
+    cd "$DEVENV_ROOT/hs" && stack run -- pun "$@"
+  '';
+  scripts.watch.exec = ''
+    cd "$DEVENV_ROOT/hs" && ghcid -a \
+    --no-height-limit \
+    -r \
+    -s ":set args $@" \
+    -s ':set -Wprepositive-qualified-module' \
+    -W
   '';
 
   enterShell = ''
@@ -70,6 +89,7 @@
     };
     # https://github.com/NixOS/nixfmt/blob/1acdae8b49c1c5d7f22fed7398d7f6f3dbce4c8a/README.md?plain=1#L16
     nixfmt-rfc-style.enable = true;
+    ormolu.enable = true;
     prettier.enable = true;
     shellcheck.enable = true;
     # https://github.com/cachix/git-hooks.nix/issues/31#issuecomment-744657870

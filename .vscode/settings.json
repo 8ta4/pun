@@ -3,7 +3,7 @@
     {
       "autoSelectForJackIn": true,
       "name": "pun",
-      "projectRootPath": ["."],
+      "projectRootPath": ["clj"],
       "projectType": "deps.edn"
     }
   ]
