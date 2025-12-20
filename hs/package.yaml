@@ -97,12 +97,12 @@ default-extensions:
   - ViewPatterns
 
 executables:
-  hs-exe:
+  pun:
     main: Main.hs
     source-dirs: app
 
 tests:
-  hs-test:
+  test:
     main: Spec.hs
     source-dirs: test
     ghc-options:
