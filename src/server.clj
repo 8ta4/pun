@@ -1,20 +1,21 @@
 (ns server
   (:require
    [clojure.edn :as edn]
+   [clojure.java.io :refer [resource]]
    [clojure.math.combinatorics :refer [cartesian-product]]
    [clojure.set :refer [intersection]]
    [clojure.string :as string :refer [split]]
-   [core :refer [get-ipa ipa-path normalized-path]]
+   [core :refer [get-ipa normalized-edn ipa-edn]]
    [libpython-clj2.python :refer [from-import]]
    [libpython-clj2.require]))
 
 (from-import Levenshtein distance)
 
 (def phrase-scores
-  (edn/read-string (slurp normalized-path)))
+  (edn/read-string (slurp (resource normalized-edn))))
 
 (def phrase-ipas
-  (edn/read-string (slurp ipa-path)))
+  (edn/read-string (slurp (resource ipa-edn))))
 
 (def has-space?
   (partial re-find #" "))
