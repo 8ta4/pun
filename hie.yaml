@@ -1,3 +1,4 @@
+# https://github.com/haskell/hie-bios/blob/3bdff0c9e4acb11eb99028fc7ea9f47b880a826f/README.md?plain=1#L81-L83
 cradle:
   stack:
     stackYaml: "hs/stack.yaml"
