@@ -301,7 +301,9 @@ No way. Reproducibility is not guaranteed for the following reasons:
 
 > How do you generate the normalized recognizability scores?
 
-1.  Run `./download.sh` in your terminal to grab the Wiktionary data you need.
+1.  Run `download-wiktionary` in your terminal to grab the Wiktionary data you need.
+
+1.  Run `cd clj`.
 
 1.  Run `clj -M -m build vocabulary` to chew through the data and spit out the `vocabulary.txt` file.
 
