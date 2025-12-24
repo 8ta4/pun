@@ -6,4 +6,4 @@ import Relude
 main :: IO ()
 main = do
   input <- getContents
-  putTextLn input
+  print $ lines input
