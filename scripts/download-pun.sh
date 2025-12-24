@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Define the data path (uses DEVENV_ROOT if available, otherwise defaults to current directory)
-DATA_PATH="${DEVENV_ROOT:-.}/resources"
+# Define the data path using DEVENV_ROOT
+DATA_PATH="$DEVENV_ROOT/clj/resources"
 BASE_URL="https://raw.githubusercontent.com/8ta4/pun-data/4b5a2c1eeb992d2c1b8faea2488768eaac6be9dc"
 
 # Create the resources directory if it doesn't exist
