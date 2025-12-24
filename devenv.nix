@@ -53,7 +53,6 @@
     cd "$DEVENV_ROOT/hs" && ghcid -a \
     --no-height-limit \
     -r \
-    -s ":set args $@" \
     -s ':set -Wprepositive-qualified-module' \
     -W
   '';
