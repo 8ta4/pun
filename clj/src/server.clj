@@ -90,6 +90,6 @@
   :stop (.stop server))
 
 (defn -main
-  [& args]
+  []
   (start)
   @(promise))
