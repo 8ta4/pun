@@ -1,6 +1,9 @@
 module Main (main) where
 
+import Data.Text.IO (getContents)
 import Relude
 
 main :: IO ()
-main = pure ()
+main = do
+  input <- getContents
+  putTextLn input
