@@ -46,24 +46,6 @@ The API key storage location is `~/.config/pun/key`.
 
 `~/.config` is the standard config folder for Unix systems. It's easier to access from the command line.
 
-## Setup
-
-> How do I set up this tool's dev environment?
-
-1. Install [devenv](https://github.com/cachix/devenv/blob/fc49bf8b75b747aba83df74c9b6406c9f4a65614/docs/getting-started.md#installation).
-
-1. Install [direnv](https://github.com/cachix/devenv/blob/fc49bf8b75b747aba83df74c9b6406c9f4a65614/docs/automatic-shell-activation.md#installing-direnv).
-
-1. Run the following commands:
-
-   ```sh
-   git clone git@github.com:8ta4/pun.git
-   cd pun
-   direnv allow
-   ```
-
-The `devenv.nix` file has got all the scripts you need.
-
 ## Vocabulary
 
 > Does `pun` limit the vocabulary it uses?
