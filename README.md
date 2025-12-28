@@ -14,6 +14,8 @@
 
 1. Install [direnv](https://github.com/cachix/devenv/blob/fc49bf8b75b747aba83df74c9b6406c9f4a65614/docs/automatic-shell-activation.md#installing-direnv).
 
+1. Install [flite](https://github.com/dmort27/epitran/blob/cb61a07cf6f17eea8daaf15923628483f0c70526/README.md#installation-of-flite-for-english-g2p).
+
 1. Run the following commands:
 
    ```sh
