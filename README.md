@@ -20,6 +20,7 @@
    git clone git@github.com:8ta4/pun.git
    cd pun
    direnv allow
+   download-pun
    ```
 
 ## Usage
