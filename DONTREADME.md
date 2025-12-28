@@ -351,15 +351,15 @@ Nah. The IPA data is generated data, not source code for the `pun` tool itself.
 
 Nope. The precomputed IPA data is stored in the separate `pun-data` Git repository alongside the recognizability scores for consistency.
 
-> Does `pun` treat diphthongs as single or double units in IPA representations when calculating Levenshtein distance?
+> Does `pun` treat diphthongs as single or double units in IPA representations when calculating Levenshtein distance? (Planned)
 
 `pun` treats diphthongs as single units. This makes the Levenshtein distance easier to understand since all vowels get treated equally.
 
-> Does `pun` treat affricates as single or double units in IPA representations when calculating Levenshtein distance?
+> Does `pun` treat affricates as single or double units in IPA representations when calculating Levenshtein distance? (Planned)
 
 `pun` treats affricates as single units. This makes the Levenshtein distance easier to wrap your head around because every consonant is treated equally.
 
-> What is the Levenshtein distance normalized by in `pun`?
+> What is the Levenshtein distance normalized by in `pun`? (Planned)
 
 The Levenshtein distance is normalized by the length of the IPA representation of the word being swapped out in the phrase, where the length is counted by treating each diphthong and affricate as just one unit.
 
@@ -383,15 +383,15 @@ Yep. That's because:
 
 - You can tweak the grammar yourself after getting the core wordplay idea, often needing to change more than just the substituted word to make it flow.
 
-> Does `pun` filter substitutions where one word is identical to the other except for an "-ly" suffix at the end?
+> Does `pun` filter out substitutions where one word is identical to the other except for an "-ly" suffix at the end? (Planned)
 
 Yes. If one word is just the other plus "-ly" or vice-versa, that usually means swapping between an adjective and its adverb form, or the other way around. Thing is, that kind of substitution rarely works as clever wordplay and often just breaks the grammar. So, to knock out these predictable duds easily, `pun` runs a simple string check for that "-ly" pattern and filters the substitution if it matches.
 
-> Does `pun` filter out substitutions where the replacement word is just an inflectional variant of the original word being replaced?
+> Does `pun` filter out substitutions where the replacement word is just an inflectional variant of the original word being replaced? (Planned)
 
 Yep. Swapping a word for another form sharing the exact same dictionary lemma almost never makes for a clever pun. So, `pun` checks if the potential replacement shares a lemma with the original word. If they match, that substitution gets filtered out.
 
-> What library does `pun` use for lemmatization?
+> What library does `pun` use for lemmatization? (Planned)
 
 `pun` rolls with [LemmInflect](https://github.com/bjascob/LemmInflect).
 
