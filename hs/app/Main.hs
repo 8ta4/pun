@@ -7,7 +7,7 @@ import Network.HTTP.Client.Conduit (parseRequest_)
 import Network.HTTP.Simple (getResponseBody, httpJSON, setRequestBodyJSON, setRequestMethod)
 import Relude hiding (lookupEnv)
 import System.Environment (lookupEnv)
-import System.Process (CreateProcess (cwd), createProcess, proc)
+import System.Process (CreateProcess (cwd, std_out), StdStream (NoStream), createProcess, proc)
 
 generatePuns :: [Text] -> IO [Text]
 generatePuns targets = getResponseBody <$> (httpJSON $ setRequestBodyJSON targets $ setRequestMethod "POST" $ parseRequest_ "http://localhost:3000")
@@ -15,7 +15,12 @@ generatePuns targets = getResponseBody <$> (httpJSON $ setRequestBodyJSON target
 startServer :: IO ()
 startServer = do
   maybeRoot <- lookupEnv "DEVENV_ROOT"
-  void $ createProcess (proc "clj" ["-M", "-m", "server"]) {cwd = (<> "/clj") <$> maybeRoot}
+  void
+    $ createProcess
+      (proc "clj" ["-M", "-m", "server"])
+        { cwd = (<> "/clj") <$> maybeRoot,
+          std_out = NoStream
+        }
 
 pollForPuns :: [Text] -> IO [Text]
 pollForPuns targets = do
