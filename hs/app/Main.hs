@@ -19,6 +19,7 @@ startServer = do
     $ createProcess
       (proc "clj" ["-M", "-m", "server"])
         { cwd = (<> "/clj") <$> maybeRoot,
+          -- This prevents `pbpaste | pun | pbcopy` from hanging when the server is launched.
           std_out = NoStream
         }
 
