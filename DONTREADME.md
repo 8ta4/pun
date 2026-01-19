@@ -303,7 +303,7 @@ No way. Reproducibility is not guaranteed for the following reasons:
 
 1.  Run `clj -M -m build normalized` to parse the scores, normalize them using the benchmark, and save the final scores to `~/.cache/pun/normalized.edn`.
 
-The `batches` command eats API credits. If your account runs goes negative, requests within the submitted batches might start failing. To get back on track, first run `clj -M -m build results` to save progress by downloading results. Then, top up your Anthropic account credits. After that, just run `clj -M -m build batches`; it will automatically identify remaining phrases and submit new batches only for those. it's smart enough to figure out what's left and only sends requests for those. Once that `batches` run finishes cleanly, proceed with the subsequent steps.
+The `batches` command eats API credits. If your account runs goes negative, requests within the submitted batches might start failing. To get back on track, first run `clj -M -m build results` to save progress by downloading results. Then, top up your Anthropic account credits. After that, just run `clj -M -m build batches`; it will automatically identify remaining phrases and submit new batches only for those. It's smart enough to figure out what's left and only sends requests for those. Once that `batches` run finishes cleanly, proceed with the subsequent steps.
 
 ## Phonetic Similarity Analysis
 
