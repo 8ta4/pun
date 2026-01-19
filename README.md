@@ -37,6 +37,6 @@
 
 1. Run this:
 
-```bash
-pbpaste | pun
-```
+   ```bash
+   pbpaste | pun
+   ```
