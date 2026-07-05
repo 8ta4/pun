@@ -132,7 +132,7 @@ No. The scores are precomputed because:
 
 Nah. That ain't happening because:
 
-- Shoving all phrases in would blow past max output token lengths..
+- Shoving all phrases in would blow past max output token lengths.
 
 - Longer outputs tend to exhibit decreased quality.
 
